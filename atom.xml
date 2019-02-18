@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-01-08T17:17:49.697Z</updated>
+  <updated>2019-02-18T15:25:07.635Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>gun-compile</title>
+    <link href="http://yoursite.com/2019/02/18/gun-compile/"/>
+    <id>http://yoursite.com/2019/02/18/gun-compile/</id>
+    <published>2019-02-18T15:11:44.000Z</published>
+    <updated>2019-02-18T15:25:07.635Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="GUN编译器"><a href="#GUN编译器" class="headerlink" title="GUN编译器"></a>GUN编译器</h2><p>编译器的一部分工作是检查文本错误：</p><ol><li>语法错误(syntax)：引号 分号等</li><li>类型错误(type error): 向一个int类型的变量传递了字符串字面值常量</li><li>声明错误(declaration error): c++的每个名字都要先声明才能使用。两种常见的声明错误是:对来自标准库的名字忘记使用std:: 、标识符名字拼写错误。(v1 写成v)</li></ol><h3 id="安装GUN编译器出现的错误："><a href="#安装GUN编译器出现的错误：" class="headerlink" title="安装GUN编译器出现的错误："></a>安装GUN编译器出现的错误：</h3><p><strong>“没有文件扩展‘.js’的脚本引擎。”</strong></p><p><img src="/2019/02/18/gun-compile/no-js.png" alt="no-js"></p><p>该错误是默认js打开方式被修改了。（我是安装了webstorm。-  -）</p><ol><li>打开注册表编辑器中的“HEKY_CLASSES_ROOT.js” </li><li>修改默认的文件为 <strong>JSFile</strong></li></ol><p><img src="/2019/02/18/gun-compile/register.png" alt="注册表编辑器"></p><h3 id="安装完成后的步骤："><a href="#安装完成后的步骤：" class="headerlink" title="安装完成后的步骤："></a>安装完成后的步骤：</h3><ol><li>打开MinGW Installation Manager</li><li>选择MinGW Compiler Suite之后，添加The GUN C++ Compiler的相关项</li><li>然后点击installation -&gt; apply changes 等待完成</li></ol><h3 id="环境变量配置："><a href="#环境变量配置：" class="headerlink" title="环境变量配置："></a>环境变量配置：</h3><ul><li>在PATH里面添加bin目录路径，我的是C:\MinGW\bin</li><li>重启cmd 然后输入g++ -v 如果出现gcc版本就说明配置成功</li></ul><p><img src="/2019/02/18/gun-compile/cmd-gcc.png" alt="cmd-gcc-version"></p><h3 id="GUN编译"><a href="#GUN编译" class="headerlink" title="GUN编译"></a>GUN编译</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -o _test test.cpp</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;GUN编译器&quot;&gt;&lt;a href=&quot;#GUN编译器&quot; class=&quot;headerlink&quot; title=&quot;GUN编译器&quot;&gt;&lt;/a&gt;GUN编译器&lt;/h2&gt;&lt;p&gt;编译器的一部分工作是检查文本错误：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;语法错误(syntax)：引号 分号等&lt;/li
+      
+    
+    </summary>
+    
+      <category term="C++Primer笔记" scheme="http://yoursite.com/categories/C-Primer%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="gun" scheme="http://yoursite.com/tags/gun/"/>
+    
+  </entry>
   
   <entry>
     <title>Hello World</title>
