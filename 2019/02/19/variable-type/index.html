@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="变量,基本类型,auto,decltype,typedef,using,">
 
 
 
@@ -79,16 +79,20 @@
 
 
 
-<meta name="description" content="默而识之，学而不厌，诲人不倦，何有于我哉？">
-<meta property="og:type" content="website">
-<meta property="og:title" content="HuaRongxie&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="变量、基本类型和类型别名任何编程语言都具备一组公共语法特征，基本特征包括：  整型、字符型等内置类型 变量，用来为对象命名 表达式和语句，用于操纵上述数据类型的具体值 if或while等控制结构，这些结构允许我们有选择的执行一些语句。 函数，用于定义可供随时调用的计算单元  大多数变成语言通过两种方式来进一步补充其基本特征：  赋予程序员自定义数据类型的权利，从而实现扩展 将一些有用的功能封装成库">
+<meta name="keywords" content="变量,基本类型,auto,decltype,typedef,using">
+<meta property="og:type" content="article">
+<meta property="og:title" content="variable-type">
+<meta property="og:url" content="http://yoursite.com/2019/02/19/variable-type/index.html">
 <meta property="og:site_name" content="HuaRongxie&#39;s Blog">
-<meta property="og:description" content="默而识之，学而不厌，诲人不倦，何有于我哉？">
+<meta property="og:description" content="变量、基本类型和类型别名任何编程语言都具备一组公共语法特征，基本特征包括：  整型、字符型等内置类型 变量，用来为对象命名 表达式和语句，用于操纵上述数据类型的具体值 if或while等控制结构，这些结构允许我们有选择的执行一些语句。 函数，用于定义可供随时调用的计算单元  大多数变成语言通过两种方式来进一步补充其基本特征：  赋予程序员自定义数据类型的权利，从而实现扩展 将一些有用的功能封装成库">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/02/19/variable-type/identifier.png">
+<meta property="og:updated_time" content="2019-02-19T14:34:12.109Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HuaRongxie&#39;s Blog">
-<meta name="twitter:description" content="默而识之，学而不厌，诲人不倦，何有于我哉？">
+<meta name="twitter:title" content="variable-type">
+<meta name="twitter:description" content="变量、基本类型和类型别名任何编程语言都具备一组公共语法特征，基本特征包括：  整型、字符型等内置类型 变量，用来为对象命名 表达式和语句，用于操纵上述数据类型的具体值 if或while等控制结构，这些结构允许我们有选择的执行一些语句。 函数，用于定义可供随时调用的计算单元  大多数变成语言通过两种方式来进一步补充其基本特征：  赋予程序员自定义数据类型的权利，从而实现扩展 将一些有用的功能封装成库">
+<meta name="twitter:image" content="http://yoursite.com/2019/02/19/variable-type/identifier.png">
 
 
 
@@ -118,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/">
+  <link rel="canonical" href="http://yoursite.com/2019/02/19/variable-type/">
 
 
 
 
 
-  <title>HuaRongxie's Blog</title>
+  <title>variable-type | HuaRongxie's Blog</title>
   
 
 
@@ -143,7 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -236,9 +240,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -268,9 +272,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/19/variable-type/" itemprop="url">variable-type</a></h1>
+          <h1 class="post-title" itemprop="name headline">variable-type</h1>
         
 
         <div class="post-meta">
@@ -342,9 +344,7 @@
       
 
       
-        
-          
-            <h1 id="变量、基本类型和类型别名"><a href="#变量、基本类型和类型别名" class="headerlink" title="变量、基本类型和类型别名"></a><strong>变量、基本类型和类型别名</strong></h1><p><strong>任何编程语言都具备一组公共语法特征，基本特征包括</strong>：</p>
+        <h1 id="变量、基本类型和类型别名"><a href="#变量、基本类型和类型别名" class="headerlink" title="变量、基本类型和类型别名"></a><strong>变量、基本类型和类型别名</strong></h1><p><strong>任何编程语言都具备一组公共语法特征，基本特征包括</strong>：</p>
 <ul>
 <li>整型、字符型等内置类型</li>
 <li>变量，用来为对象命名</li>
@@ -642,8 +642,6 @@
 <p>而解引用操作得到的结果是一个左值，因此decltype(*p)是一个引用类型。</p>
 <p>decltype的一个注意的点是：如果decltype所用的表达式是一个变量名加上了一层或多层括号，编译器就会将变量认为是表达式。而变量是一种可以作为赋值语句左值的特殊表达式。所以decltype得到的结果会是引用。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">decltype</span>((i)) d;		<span class="comment">//错误：d是int &amp;,必须初始化</span></span><br></pre></td></tr></table></figure>
-          
-        
       
     </div>
     
@@ -658,328 +656,46 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/18/gun-compile/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="HuaRongxie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HuaRongxie's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/18/gun-compile/" itemprop="url">gun-compile</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-18T23:11:44+08:00">
-                2019-02-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/C-Primer笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">C++Primer笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/变量/" rel="tag"># 变量</a>
           
-
+            <a href="/tags/基本类型/" rel="tag"># 基本类型</a>
           
-            
+            <a href="/tags/auto/" rel="tag"># auto</a>
           
-
+            <a href="/tags/decltype/" rel="tag"># decltype</a>
           
+            <a href="/tags/typedef/" rel="tag"># typedef</a>
           
-
+            <a href="/tags/using/" rel="tag"># using</a>
           
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="GUN编译器"><a href="#GUN编译器" class="headerlink" title="GUN编译器"></a>GUN编译器</h2><p>编译器的一部分工作是检查文本错误：</p>
-<ol>
-<li>语法错误(syntax)：引号 分号等</li>
-<li>类型错误(type error): 向一个int类型的变量传递了字符串字面值常量</li>
-<li>声明错误(declaration error): c++的每个名字都要先声明才能使用。两种常见的声明错误是:对来自标准库的名字忘记使用std:: 、标识符名字拼写错误。(v1 写成v)</li>
-</ol>
-<h3 id="安装GUN编译器出现的错误："><a href="#安装GUN编译器出现的错误：" class="headerlink" title="安装GUN编译器出现的错误："></a>安装GUN编译器出现的错误：</h3><p><strong>“没有文件扩展‘.js’的脚本引擎。”</strong></p>
-<p><img src="/2019/02/18/gun-compile/no-js.png" alt="no-js"></p>
-<p>该错误是默认js打开方式被修改了。（我是安装了webstorm。-  -）</p>
-<ol>
-<li>打开注册表编辑器中的“HEKY_CLASSES_ROOT.js” </li>
-<li>修改默认的文件为 <strong>JSFile</strong></li>
-</ol>
-<p><img src="/2019/02/18/gun-compile/register.png" alt="注册表编辑器"></p>
-<h3 id="安装完成后的步骤："><a href="#安装完成后的步骤：" class="headerlink" title="安装完成后的步骤："></a>安装完成后的步骤：</h3><ol>
-<li>打开MinGW Installation Manager</li>
-<li>选择MinGW Compiler Suite之后，添加The GUN C++ Compiler的相关项</li>
-<li>然后点击installation -&gt; apply changes 等待完成</li>
-</ol>
-<h3 id="环境变量配置："><a href="#环境变量配置：" class="headerlink" title="环境变量配置："></a>环境变量配置：</h3><ul>
-<li>在PATH里面添加bin目录路径，我的是C:\MinGW\bin</li>
-<li>重启cmd 然后输入g++ -v 如果出现gcc版本就说明配置成功</li>
-</ul>
-<p><img src="/2019/02/18/gun-compile/cmd-gcc.png" alt="cmd-gcc-version"></p>
-<h3 id="GUN编译"><a href="#GUN编译" class="headerlink" title="GUN编译"></a>GUN编译</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -o _test test.cpp</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
       
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/25/hello-world/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="HuaRongxie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HuaRongxie's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/25/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-25T23:42:24+08:00">
-                2018-11-25
-              </time>
+              <a href="/2019/02/18/gun-compile/" rel="next" title="gun-compile">
+                <i class="fa fa-chevron-left"></i> gun-compile
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -989,10 +705,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -1000,6 +717,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -1020,8 +741,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -1095,6 +825,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#变量、基本类型和类型别名"><span class="nav-number">1.</span> <span class="nav-text">变量、基本类型和类型别名</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本内置类型"><span class="nav-number">1.1.</span> <span class="nav-text">基本内置类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#C-基本类型大小"><span class="nav-number">1.1.1.</span> <span class="nav-text">C++基本类型大小</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#带符号和不带符号类型"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">带符号和不带符号类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字面值常量（literal）"><span class="nav-number">1.1.2.</span> <span class="nav-text">字面值常量（literal）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#整数和浮点型字面值："><span class="nav-number">1.1.2.1.</span> <span class="nav-text">整数和浮点型字面值：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符和字符串字面值："><span class="nav-number">1.1.2.2.</span> <span class="nav-text">字符和字符串字面值：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#布尔和指针字面值："><span class="nav-number">1.1.2.3.</span> <span class="nav-text">布尔和指针字面值：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#转义序列："><span class="nav-number">1.1.2.4.</span> <span class="nav-text">转义序列：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#指定字面值的类型："><span class="nav-number">1.1.2.5.</span> <span class="nav-text">指定字面值的类型：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变量"><span class="nav-number">1.2.</span> <span class="nav-text">变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#变量定义"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">变量定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变量初始化"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">变量初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变量的声明与定义（extern关键字）"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">变量的声明与定义（extern关键字）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标识符"><span class="nav-number">1.2.0.4.</span> <span class="nav-text">标识符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#作用域（scope）："><span class="nav-number">1.2.0.5.</span> <span class="nav-text">作用域（scope）：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复合类型"><span class="nav-number">1.2.1.</span> <span class="nav-text">复合类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#复合类型的声明"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">复合类型的声明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#指针和引用的区别："><span class="nav-number">1.2.1.2.</span> <span class="nav-text">指针和引用的区别：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型的处理"><span class="nav-number">1.2.2.</span> <span class="nav-text">类型的处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类型别名"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">类型别名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#auto类型说明符"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">auto类型说明符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#decltype类型指示符"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">decltype类型指示符:</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1235,6 +981,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
