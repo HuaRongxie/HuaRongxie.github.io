@@ -251,6 +251,313 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/20/string/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HuaRongxie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HuaRongxie's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/20/string/" itemprop="url">标准库类型string</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-20T06:44:44+08:00">
+                2019-02-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-Primer笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">C++Primer笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="标准库类型string"><a href="#标准库类型string" class="headerlink" title="标准库类型string"></a>标准库类型string</h1><p>string表示可变长的字符序列。</p>
+<ul>
+<li>使用string类型必须首先包含头文件</li>
+<li>作为标准库的一部分，string定义在命名空间std中。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>一个类可以定义很多种初始化对象的方式，但是这些方式之间必须有所区别：</p>
+<ul>
+<li>或者是初始值数量不同</li>
+<li>或者是初始值类型不同</li>
+</ul>
+<p><strong>以下是初始化string的方式：</strong></p>
+<ol>
+<li>默认初始化</li>
+</ol>
+<p>通过默认的方式初始化一个string对象，得到的s1是个空字符串。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> s1;			<span class="comment">//默认初始化</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>用另一个string进行初始化</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s2</span><span class="params">(s1)</span></span>;		<span class="comment">//s2是s1的副本</span></span><br><span class="line"><span class="built_in">string</span> s2 = s1;		<span class="comment">//等价于s2(s1)</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>给定一个字符串字面值</li>
+</ol>
+<p>则该字面值中除了最后一个空字符外其他所有的字符都被拷贝到新创建的string对象中去。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s3</span><span class="params">(“value”)</span></span>;	<span class="comment">//s3是字面值”value”的副本，除了字面值最后一个空字符外</span></span><br><span class="line"><span class="built_in">string</span> s3 = “value”;	<span class="comment">//同上</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>给定一个数字和一个字符</li>
+</ol>
+<p>则string对象的内容是给定字符连续重复若干次后得到的序列。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s4</span><span class="params">(n,’c’)</span></span>;		<span class="comment">//把s4初始化为由连续n个字符c组成的串</span></span><br></pre></td></tr></table></figure>
+<h4 id="直接初始化和拷贝初始化"><a href="#直接初始化和拷贝初始化" class="headerlink" title="直接初始化和拷贝初始化"></a>直接初始化和拷贝初始化</h4><p>像用“=”等号初始化一个变量是拷贝初始化，反之则是直接初始化。</p>
+<p>而像上面的s4那样初始化用到的值有多个，一般来说只能使用直接初始化的方式。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> s5 = <span class="string">"hi"</span>;		<span class="comment">//拷贝初始化</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s6</span><span class="params">(<span class="string">"hi"</span>)</span></span>;		<span class="comment">//直接初始化</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s7</span><span class="params">(<span class="number">10</span>, <span class="string">'C'</span>)</span></span>;		<span class="comment">//直接初始化，s7为cccccccccc</span></span><br></pre></td></tr></table></figure>
+<h4 id="string对象上的操作"><a href="#string对象上的操作" class="headerlink" title="string对象上的操作:"></a><strong>string对象上的操作:</strong></h4><p>以下是大多数操作：</p>
+<table>
+<thead>
+<tr>
+<th>os&lt;&lt;s</th>
+<th>将s写到输出流os中，返回os</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>is&gt;&gt;s</td>
+<td>将is中读出字符串赋给s，字符串以<strong>空白分隔</strong>，返回is</td>
+</tr>
+<tr>
+<td>getline(is,s)</td>
+<td>从is中读取一行赋给s，返回is</td>
+</tr>
+<tr>
+<td>s.empty()</td>
+<td>s为空返回true，否则返回false</td>
+</tr>
+<tr>
+<td>s.size()</td>
+<td>返回s中字符的个数</td>
+</tr>
+<tr>
+<td>s[n]</td>
+<td>返回s中第n个字符的引用，位置从0计起</td>
+</tr>
+<tr>
+<td>s1+s2</td>
+<td>返回s1和s2连接后的结果</td>
+</tr>
+<tr>
+<td>s1=s2</td>
+<td>用s2的副本代替s1中原来的字符</td>
+</tr>
+<tr>
+<td>s1==s2</td>
+<td>如果s1和s2中所含的字符完全一样，则他们相等</td>
+</tr>
+<tr>
+<td>s1!=s2</td>
+<td>与上相反</td>
+</tr>
+<tr>
+<td>&lt;,&lt;=,&gt;,&gt;=</td>
+<td>利用字符在字典中的顺序进行比较，对大小写敏感</td>
+</tr>
+</tbody>
+</table>
+<h4 id="读写string对象"><a href="#读写string对象" class="headerlink" title="读写string对象"></a>读写string对象</h4><p>可以使用io操作符读写string对象:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> s1, s2;			<span class="comment">//空字符串</span></span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; s1 &gt;&gt; s2;		<span class="comment">//将string对象读入s，遇到空白停止</span></span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt; s1 &lt;&lt; s2 &lt;&lt;<span class="built_in">endl</span>;	<span class="comment">//输出s</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在执行读取操作时，string对象会自动<strong>忽略开头的空白</strong>(即空格符、换行符、制表符等)并从第一个真正的字符读起，直到<strong>遇见下一处空白</strong>。</p>
+<p>例如输入”    hello world    “，那么输出会是”hello”和”world”，不会有空白。</p>
+<h5 id="使用getline-读取一整行："><a href="#使用getline-读取一整行：" class="headerlink" title="使用getline()读取一整行："></a>使用getline()读取一整行：</h5><p>有时我们希望最终得到的字符串中保留输入时的空白符，那么用getline()代替原来的&gt;&gt;运算符。他的参数是一个输入流和一个string对象，函数从给定的输入流中读入内容，直到遇到换行符位置(换行符也读入)，然后将内容存到string(不存换行符)。随后返回它的流参数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> line;</span><br><span class="line">getline(<span class="built_in">cin</span>, line);			<span class="comment">//读入一整行</span></span><br><span class="line"><span class="built_in">cout</span>&lt;&lt; line &lt;&lt;<span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+<h5 id="string-size-type类型："><a href="#string-size-type类型：" class="headerlink" title="string::size_type类型："></a>string::size_type类型：</h5><p>对于size()函数来说，返回一个int类型或者unsigned似乎都是合情合理的。但是size函数返回的是一个string::size_type类型的值。</p>
+<p>string类以及其他大多数标准库类型都定义了几种配套的类型，为了体现标准库类型与机器无关。</p>
+<p>它是一个<strong>无符号类型</strong>的值，而且<strong>足够存放</strong>下任何string对象的大小。</p>
+<h5 id="比较string对象："><a href="#比较string对象：" class="headerlink" title="比较string对象："></a>比较string对象：</h5><p>相等性运算符(== 、!=)和关系运算符(&lt;、&lt;=、&gt;、&gt;=)都按照字典顺序：</p>
+<ol>
+<li><p>如果两个string对象的长度不同，而且较短string对象的每个字符都与较长string对象对应位置上字符相同，就说较短string小于较长string</p>
+</li>
+<li><p>如果两个string对象在某些对应位置上不一致，则string对象比较的结果其实是string对象中第一对不同字符比较的结果</p>
+</li>
+</ol>
+<p>例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> str = <span class="string">"Hello"</span>;</span><br><span class="line"><span class="built_in">string</span> phrase = <span class="string">"Hello World"</span>;</span><br><span class="line"><span class="built_in">string</span> slang = <span class="string">"Hiya"</span>;</span><br></pre></td></tr></table></figure>
+<p>根据规则1，str&lt;phrase。根据规则2, slang&gt;phrase 也 &gt;str。</p>
+<h5 id="字面值和string对象相加："><a href="#字面值和string对象相加：" class="headerlink" title="字面值和string对象相加："></a>字面值和string对象相加：</h5><p>标准库允许把字符字面值和字符串字面值转换成string对象。但必须确保每个加法运算符(+)两侧运算对象至少有一个是string：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> s3 = s1 + <span class="string">"value"</span>;					<span class="comment">//正确 </span></span><br><span class="line"><span class="built_in">string</span> s4 = <span class="string">"value"</span> + <span class="string">","</span>;					<span class="comment">//错误 两个都不是string</span></span><br><span class="line"><span class="built_in">string</span> s5 = s1 + <span class="string">"value"</span> + <span class="string">","</span> + <span class="string">"dog"</span>; 	<span class="comment">//正确，每个加法都有一个string</span></span><br><span class="line"><span class="built_in">string</span> s6 = <span class="string">"value"</span> + <span class="string">","</span> + s1;				<span class="comment">//错误，不能把字面值相加</span></span><br></pre></td></tr></table></figure>
+<p><strong><u>注意</u>：字符串字面值与string是不同的类型。</strong></p>
+<h5 id="string处理字符的一些函数"><a href="#string处理字符的一些函数" class="headerlink" title="string处理字符的一些函数:"></a>string处理字符的一些函数:</h5><p><strong>表:cctype头文件的函数</strong></p>
+<table>
+<thead>
+<tr>
+<th>isalnum(c)</th>
+<th>当c是字母或数字时为真</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>isalpha(c)</td>
+<td>当c是字母时为真</td>
+</tr>
+<tr>
+<td>iscntrl(c)</td>
+<td>当c是控制字符为真</td>
+</tr>
+<tr>
+<td>isdigit(c)</td>
+<td>当c是数字时为真</td>
+</tr>
+<tr>
+<td>isgraph(c)</td>
+<td>当c不是空格但可打印时为真</td>
+</tr>
+<tr>
+<td>islower(c)</td>
+<td>当c是小写字母时为真</td>
+</tr>
+<tr>
+<td>isprint(c)</td>
+<td>当c是可打印字符时为真(即c是空格或c具有可视形式)</td>
+</tr>
+<tr>
+<td>ispunct(c)</td>
+<td>当c是标点符号时为真(即c不是控制字符、数字、字母、可打印空白中的一种)</td>
+</tr>
+<tr>
+<td>isspace(c)</td>
+<td>当c是空白时为真(即c是空格、横向制表符、纵向制表符、回车符、换行符、进纸符中的一种)</td>
+</tr>
+<tr>
+<td>isupper(c)</td>
+<td>当c是大写字母时为真</td>
+</tr>
+<tr>
+<td>isxdigit(c)</td>
+<td>当c是十六进制数字时为真</td>
+</tr>
+<tr>
+<td>tolower(c)</td>
+<td>如果c是大写字母，输出对应的小写字母；否则原样输出c</td>
+</tr>
+<tr>
+<td>toupper(c)</td>
+<td>如果c是小写字母，输出对应的大写字母；否则原样输出c</td>
+</tr>
+</tbody>
+</table>
+<p><strong><u>建议</u>使用c++的兼容c的标准库头文件</strong>。c语言头文件为name.h而c++则将命名为cname。</p>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/19/variable-type/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -270,7 +577,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/19/variable-type/" itemprop="url">variable-type</a></h1>
+                <a class="post-title-link" href="/2019/02/19/variable-type/" itemprop="url">变量、基本类型和类型别名</a></h1>
         
 
         <div class="post-meta">
@@ -708,7 +1015,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/18/gun-compile/" itemprop="url">gun-compile</a></h1>
+                <a class="post-title-link" href="/2019/02/18/gun-compile/" itemprop="url">GUN编译器</a></h1>
         
 
         <div class="post-meta">
@@ -1036,7 +1343,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1058,7 +1365,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
