@@ -2,9 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2019/02/23/array/</loc>
+    
+    <lastmod>2019-02-23T13:49:59.920Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/02/23/iterator/</loc>
+    
+    <lastmod>2019-02-23T13:18:37.117Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/02/23/vector/</loc>
+    
+    <lastmod>2019-02-23T13:17:14.400Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/02/20/string/</loc>
     
-    <lastmod>2019-02-20T13:37:30.245Z</lastmod>
+    <lastmod>2019-02-20T13:41:45.339Z</lastmod>
     
   </url>
   

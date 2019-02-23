@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="iterator,迭代器,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="迭代器迭代器的介绍迭代器是一种比下标运算符访问元素更通用的机制。 所有标准库容器都可以使用迭代器，但是只有少数几种才同时支持下标运算符。 迭代器类型：1234567vector&amp;lt;int&amp;gt;::iterator it1;		//能读写vector&amp;lt;int&amp;gt;的元素string::iterator it2;			//能读写string对象中的元素vector&amp;lt;int&amp;gt;:">
+<meta name="keywords" content="iterator,迭代器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="迭代器">
+<meta property="og:url" content="http://yoursite.com/2019/02/23/iterator/index.html">
+<meta property="og:site_name" content="HuaRongxie&#39;s Blog">
+<meta property="og:description" content="迭代器迭代器的介绍迭代器是一种比下标运算符访问元素更通用的机制。 所有标准库容器都可以使用迭代器，但是只有少数几种才同时支持下标运算符。 迭代器类型：1234567vector&amp;lt;int&amp;gt;::iterator it1;		//能读写vector&amp;lt;int&amp;gt;的元素string::iterator it2;			//能读写string对象中的元素vector&amp;lt;int&amp;gt;:">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-02-23T13:18:37.117Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="迭代器">
+<meta name="twitter:description" content="迭代器迭代器的介绍迭代器是一种比下标运算符访问元素更通用的机制。 所有标准库容器都可以使用迭代器，但是只有少数几种才同时支持下标运算符。 迭代器类型：1234567vector&amp;lt;int&amp;gt;::iterator it1;		//能读写vector&amp;lt;int&amp;gt;的元素string::iterator it2;			//能读写string对象中的元素vector&amp;lt;int&amp;gt;:">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/23/iterator/">
+
+
+
+
+
+  <title>迭代器 | HuaRongxie's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HuaRongxie's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/23/iterator/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HuaRongxie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HuaRongxie's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">迭代器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-23T21:14:57+08:00">
+                2019-02-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-Primer笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">C++Primer笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h1><h3 id="迭代器的介绍"><a href="#迭代器的介绍" class="headerlink" title="迭代器的介绍"></a>迭代器的介绍</h3><p>迭代器是一种比下标运算符访问元素更通用的机制。</p>
+<p>所有标准库容器都可以使用<strong>迭代器</strong>，但是只有少数几种才同时支持<strong>下标运算符</strong>。</p>
+<h4 id="迭代器类型："><a href="#迭代器类型：" class="headerlink" title="迭代器类型："></a>迭代器类型：</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::iterator it1;		<span class="comment">//能读写vector&lt;int&gt;的元素</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span>::iterator it2;			<span class="comment">//能读写string对象中的元素</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::const_iterator it3;<span class="comment">//只能读vector&lt;int&gt;的元素</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span>::const_iterator it4;		<span class="comment">//只能读string对象中的元素</span></span><br></pre></td></tr></table></figure>
+<p>跟常量指针差不多，如果vector对象或string对象不是常量，那么既可以用iterator也可以用const_iterator。</p>
+<h4 id="迭代器成员begin和end："><a href="#迭代器成员begin和end：" class="headerlink" title="迭代器成员begin和end："></a>迭代器成员begin和end：</h4><p>有迭代器的类型同时拥有返回迭代器的成员。比如这些类型都拥有名为begin和end的成员，其中begin成员负责返回指向第一个元素的迭代器。如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> a = v.begin(), b =v.end();</span><br></pre></td></tr></table></figure>
+<p>迭代器b被称作尾后迭代器。它指向的是尾元素的下一个位置，本不存在的位置。</p>
+<p><strong>如果容器为空，那么begin和end返回的是同一个尾后迭代器。</strong></p>
+<p>如果容器对象的类型是常量，那么begin 和end返回的类型是const_iterator。如果不是则返回iterator：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</span><br><span class="line"><span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; cv;</span><br><span class="line"><span class="keyword">auto</span> it1 = v.begin();	<span class="comment">//it1的类型是vector&lt;int&gt;::iterator</span></span><br><span class="line"><span class="keyword">auto</span> it2 = cv.begin();	<span class="comment">//it2的类型是vector&lt;int&gt;::const_iterator</span></span><br></pre></td></tr></table></figure>
+<p>如果对象只需读操作，那么我们可以使用两个新函数:</p>
+<p><strong>cbegin</strong>和<strong>cend</strong>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> it3 = v.cbegin(); 		<span class="comment">//it3的类型是const_iterator</span></span><br></pre></td></tr></table></figure>
+<h3 id="迭代器运算符-操作-："><a href="#迭代器运算符-操作-：" class="headerlink" title="迭代器运算符(操作)："></a>迭代器运算符(操作)：</h3><table>
+<thead>
+<tr>
+<th>*iter</th>
+<th>返回迭代器iter所指元素的引用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>iter-&gt;mem</td>
+<td>解引用iter并获取该元素的名为mem的成员，等价于(*iter).mem</td>
+</tr>
+<tr>
+<td>++iter</td>
+<td>令iter指示容器中的下一个元素</td>
+</tr>
+<tr>
+<td>–iter</td>
+<td>令iter指示容器中的上一个元素</td>
+</tr>
+<tr>
+<td>iter1 == iter2、iter1 != iter2</td>
+<td>判断两个迭代器是否相等(不相等)，如果两个迭代器指示的是同一个元素或者它们是同一个容器的尾后迭代器，则相等。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="解引用和成员访问："><a href="#解引用和成员访问：" class="headerlink" title="解引用和成员访问："></a>解引用和成员访问：</h4><p>和指针一样，迭代器也能被解引用来获取所指示的元素，当然前提是迭代器合法并且确实指示某一个元素。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s</span><span class="params">(<span class="string">"some string"</span>)</span></span>;</span><br><span class="line"><span class="keyword">if</span> (s.begin() != s.end())&#123;	<span class="comment">//确保s非空</span></span><br><span class="line">    <span class="keyword">auto</span> it = s.begin();	<span class="comment">//it指示s的第一个字符</span></span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt; *it &lt;&lt;<span class="built_in">endl</span>;		<span class="comment">//解引用获取元素输出</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>解引用可以获得迭代器所指的对象，如果对象的类型刚好是类，就能进一步<strong>访问它的成员</strong>。例如vector<string>想要检查元素是否为空就可以用：</string></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(*it).empty();	<span class="comment">//此处的括号必须要加</span></span><br></pre></td></tr></table></figure>
+<p>然后为了简化上述操作，c++定义了 箭头运算符(-&gt;)。 </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">it-&gt;empty();		<span class="comment">//和上面意思相同</span></span><br></pre></td></tr></table></figure>
+<h4 id="迭代器的移动："><a href="#迭代器的移动：" class="headerlink" title="迭代器的移动："></a>迭代器的移动：</h4><p>将迭代器从一个元素移到另外一个元素：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s= “some thing”;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> it = s.begin();it!=s.end &amp;&amp; !<span class="built_in">isspace</span>(*it);++it)&#123;</span><br><span class="line">	*it = <span class="built_in">toupper</span>(*it); <span class="comment">//将当前字符大写</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>在for里不用&lt;而用!= 的原因是因为迭代器使然</strong>，之前说只有string和vector等一些标准库类型有下标运算符，并非全部如此。与之类似，所有标准库容器的迭代器都定义了==和!=，但是大多数没有&lt;运算符。</p>
+<h4 id="某些对vector对象操作会使迭代器失效："><a href="#某些对vector对象操作会使迭代器失效：" class="headerlink" title="某些对vector对象操作会使迭代器失效："></a>某些对vector对象操作会使迭代器失效：</h4><p>vector是动态增长，但也有副作用。已知的一个限制是不能在范围for循环中向vector对象添加元素。另外一个是任何一种可能改变vector容量的操作，比如push_back。都会使迭代器失效。9.3.6</p>
+<h4 id="迭代器运算："><a href="#迭代器运算：" class="headerlink" title="迭代器运算："></a><strong>迭代器运算：</strong></h4><p>迭代器的算术运算(必须是两个迭代器指向同一个容器中的元素)：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">iter += n;	<span class="comment">//向前移动了n个元素</span></span><br><span class="line"></span><br><span class="line">iter -= n;		<span class="comment">//向后移动了n个元素</span></span><br><span class="line"></span><br><span class="line">iter1 - iter2; <span class="comment">//两个迭代器相减就是他们的距离</span></span><br><span class="line"></span><br><span class="line">&lt;、&gt;、&lt;=、&gt;=;<span class="comment">//两个迭代器的前后位置比较</span></span><br></pre></td></tr></table></figure>
+<p>只要两个迭代器指向的是同一个容器或者尾元素，就能相减。距离是指右侧迭代器向前移动多少位就能追上左侧迭代器，其类型名是<strong>difference_type</strong>的带符号整型数。</p>
+<p>ps：还需拓展</p>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iterator/" rel="tag"># iterator</a>
+          
+            <a href="/tags/迭代器/" rel="tag"># 迭代器</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/23/vector/" rel="next" title="标准库类型vector">
+                <i class="fa fa-chevron-left"></i> 标准库类型vector
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/23/array/" rel="prev" title="数组">
+                数组 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">HuaRongxie</p>
+              <p class="site-description motion-element" itemprop="description">默而识之，学而不厌，诲人不倦，何有于我哉？</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://jiangwr.github.io" title="鸢之" target="_blank">鸢之</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#迭代器"><span class="nav-number">1.</span> <span class="nav-text">迭代器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代器的介绍"><span class="nav-number">1.0.1.</span> <span class="nav-text">迭代器的介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器类型："><span class="nav-number">1.0.1.1.</span> <span class="nav-text">迭代器类型：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器成员begin和end："><span class="nav-number">1.0.1.2.</span> <span class="nav-text">迭代器成员begin和end：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代器运算符-操作-："><span class="nav-number">1.0.2.</span> <span class="nav-text">迭代器运算符(操作)：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#解引用和成员访问："><span class="nav-number">1.0.2.1.</span> <span class="nav-text">解引用和成员访问：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器的移动："><span class="nav-number">1.0.2.2.</span> <span class="nav-text">迭代器的移动：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#某些对vector对象操作会使迭代器失效："><span class="nav-number">1.0.2.3.</span> <span class="nav-text">某些对vector对象操作会使迭代器失效：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器运算："><span class="nav-number">1.0.2.4.</span> <span class="nav-text">迭代器运算：</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">HuaRongxie</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
