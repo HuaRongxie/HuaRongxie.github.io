@@ -82,19 +82,19 @@
 <meta name="description" content="表达式与运算符(附表)表达式由一个或多个运算对象组成，对表达式求值将得到一个结果。 字面值和变量是最简单的表达式，其结果就是它们的值。 把一个运算符和一个或多个运算对象组合起来可以生成较复杂的表达式。 基本概念c++定义了一元运算符和二元运算符，作用于一个运算对象的运算符是一元比如说取地址符(&amp;amp;)和解引用符(*)。 作用于两个对象的是二元比如乘法运算符(*)。 此外还有作用于三个运算对象的">
 <meta name="keywords" content="表达式,运算符">
 <meta property="og:type" content="article">
-<meta property="og:title" content="expression-operate">
+<meta property="og:title" content="表达式与运算符">
 <meta property="og:url" content="http://yoursite.com/2019/03/01/expression-operate/index.html">
 <meta property="og:site_name" content="HuaRongxie&#39;s Blog">
 <meta property="og:description" content="表达式与运算符(附表)表达式由一个或多个运算对象组成，对表达式求值将得到一个结果。 字面值和变量是最简单的表达式，其结果就是它们的值。 把一个运算符和一个或多个运算对象组合起来可以生成较复杂的表达式。 基本概念c++定义了一元运算符和二元运算符，作用于一个运算对象的运算符是一元比如说取地址符(&amp;amp;)和解引用符(*)。 作用于两个对象的是二元比如乘法运算符(*)。 此外还有作用于三个运算对象的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/03/01/expression-operate/C:/Users/pjn/Desktop/expression-operate/arithmetic.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/01/expression-operate/C:/Users/pjn/Desktop/expression-operate/logic.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/01/expression-operate/C:/Users/pjn/Desktop/expression-operate/bit.png">
-<meta property="og:updated_time" content="2019-03-01T11:58:15.926Z">
+<meta property="og:image" content="http://yoursite.com/2019/03/01/expression-operate/arithmetic.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/01/expression-operate/logic.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/01/expression-operate/bit.png">
+<meta property="og:updated_time" content="2019-03-04T14:00:14.749Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="expression-operate">
+<meta name="twitter:title" content="表达式与运算符">
 <meta name="twitter:description" content="表达式与运算符(附表)表达式由一个或多个运算对象组成，对表达式求值将得到一个结果。 字面值和变量是最简单的表达式，其结果就是它们的值。 把一个运算符和一个或多个运算对象组合起来可以生成较复杂的表达式。 基本概念c++定义了一元运算符和二元运算符，作用于一个运算对象的运算符是一元比如说取地址符(&amp;amp;)和解引用符(*)。 作用于两个对象的是二元比如乘法运算符(*)。 此外还有作用于三个运算对象的">
-<meta name="twitter:image" content="http://yoursite.com/2019/03/01/expression-operate/C:/Users/pjn/Desktop/expression-operate/arithmetic.png">
+<meta name="twitter:image" content="http://yoursite.com/2019/03/01/expression-operate/arithmetic.png">
 
 
 
@@ -130,7 +130,7 @@
 
 
 
-  <title>expression-operate | HuaRongxie's Blog</title>
+  <title>表达式与运算符 | HuaRongxie's Blog</title>
   
 
 
@@ -274,7 +274,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">expression-operate</h1>
+          <h1 class="post-title" itemprop="name headline">表达式与运算符</h1>
         
 
         <div class="post-meta">
@@ -365,11 +365,11 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; i &lt;&lt; “ ”&lt;&lt; ++i &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
 <p>我们不知道是先++i还是先输出i再++。编译器可能先求++i的值那么结果是1 1，也可能先输出i那么结果是0 1。因为此表达式的行为不可预知，因此编译器生成什么样的代码程序都是错误的。</p>
 <p><strong>但是有四种运算符明确规定了运算对象的求值顺序。 逻辑与(&amp;&amp;)、逻辑或(||)、条件(?:)、逗号(,)。</strong></p>
-<h3 id="算术运算符"><a href="#算术运算符" class="headerlink" title="算术运算符"></a>算术运算符</h3><p><img src="/2019/03/01/expression-operate/C:/Users/pjn/Desktop/expression-operate/arithmetic.png" alt=""></p>
+<h3 id="算术运算符"><a href="#算术运算符" class="headerlink" title="算术运算符"></a>算术运算符</h3><p><img src="/2019/03/01/expression-operate/arithmetic.png" alt=""></p>
 <p>按照运算符的优先级分组，一元运算符最高。上面所有运算符都满足左结合律。</p>
 <p>取余：如果m和n是整数且n非0，则表达式(m/n)*n+m%n的求值结果与m相等:</p>
 <p>m%(-n) 就是 m%n、 -m%n 就是-(m%n)。</p>
-<h4 id="逻辑-和-关系运算符"><a href="#逻辑-和-关系运算符" class="headerlink" title="逻辑 和 关系运算符"></a>逻辑 和 关系运算符</h4><p><img src="/2019/03/01/expression-operate/C:/Users/pjn/Desktop/expression-operate/logic.png" alt=""></p>
+<h4 id="逻辑-和-关系运算符"><a href="#逻辑-和-关系运算符" class="headerlink" title="逻辑 和 关系运算符"></a>逻辑 和 关系运算符</h4><p><img src="/2019/03/01/expression-operate/logic.png" alt=""></p>
 <p>逻辑与(&amp;&amp;)：当且仅当两个运算对象都为真适才为真；逻辑或(||)：只要有一个为真结果就为真。</p>
 <p>逻辑与和逻辑或都是先算左边运算对象值，如果无法确定表达式结果才算右侧运算对象的值。—称为短路求值</p>
 <ul>
@@ -412,7 +412,7 @@
 <p>例：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> finalgrade = (grade&lt;<span class="number">60</span>) ?<span class="string">"fail"</span> : <span class="string">"pass"</span>;</span><br></pre></td></tr></table></figure>
 <p>条件运算符的优先级很低，比cout还低，所以最好加括号。</p>
-<h4 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h4><p><img src="/2019/03/01/expression-operate/C:/Users/pjn/Desktop/expression-operate/bit.png" alt=""></p>
+<h4 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h4><p><img src="/2019/03/01/expression-operate/bit.png" alt=""></p>
 <p><strong>移位运算符(&lt;&lt; 、&gt;&gt;)：</strong></p>
 <p>一般来说，运算对象是小整型会被提升成大整型，左移运算符在右侧插入值为0的二进制位。右移行为依赖左侧运算对象的类型:如果对象是无符号类型，在左侧插入0；如果带符号，在左侧插入符号位的副本或值为0的二进制位。</p>
 <p>移位超出的直接被舍弃。</p>
@@ -731,11 +731,9 @@
 </tr>
 <tr>
 <td>左</td>
-<td>\</td>
-<td></td>
+<td>丨</td>
 <td>位或</td>
-<td>expr\</td>
-<td>expr</td>
+<td>expr丨expr</td>
 </tr>
 <tr>
 <td>左</td>
@@ -745,13 +743,9 @@
 </tr>
 <tr>
 <td>左</td>
-<td>\</td>
-<td>\</td>
-<td></td>
+<td>丨丨</td>
 <td>逻辑或</td>
-<td>expr\</td>
-<td>\</td>
-<td>expr</td>
+<td>expr丨丨expr</td>
 </tr>
 <tr>
 <td>左</td>
@@ -785,8 +779,7 @@
 </tr>
 <tr>
 <td>右</td>
-<td>&amp;=, \</td>
-<td>=, ^=</td>
+<td>&amp;=,丨 =, ^=</td>
 <td></td>
 <td></td>
 </tr>
@@ -844,6 +837,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/04/statement/" rel="prev" title="语句">
+                语句 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -920,7 +917,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -942,7 +939,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -967,7 +964,7 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="http://jiangwr.github.io" title="鸢之" target="_blank">鸢之</a>
+                    <a href="http://jiangwr.github.io" title="JiangWr" target="_blank">JiangWr</a>
                   </li>
                 
               </ul>
