@@ -122,15 +122,43 @@
     </url>
 
     <url>
+        <loc>http://yoursite.com/tags/statement/</loc>
+        <lastmod>2019-03-04T13:32:24.547Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/%E8%AF%AD%E5%8F%A5/</loc>
+        <lastmod>2019-03-04T13:32:24.547Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://yoursite.com/tags/%E8%A1%A8%E8%BE%BE%E5%BC%8F/</loc>
-        <lastmod>2019-03-01T11:58:15.926Z</lastmod>
+        <lastmod>2019-03-04T14:00:14.749Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yoursite.com/tags/%E8%BF%90%E7%AE%97%E7%AC%A6/</loc>
-        <lastmod>2019-03-01T11:58:15.926Z</lastmod>
+        <lastmod>2019-03-04T14:00:14.749Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/function/</loc>
+        <lastmod>2019-03-05T11:51:43.034Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/%E5%87%BD%E6%95%B0/</loc>
+        <lastmod>2019-03-05T11:51:43.034Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
