@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java基础,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="final、finally、finalize的区别final:  final修饰的类不可以被继承。 final修饰的方法不可以被重写。 final修饰的变量引用不可以改变。  finally:finally是Java保证重点代码一定要被执行的一种机制。我们可以使用try-finally或者try-catch-finally来进行类似关闭JDBC连接、保证unlock锁等动作。 finalize:f">
+<meta name="keywords" content="Java基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java基础">
+<meta property="og:url" content="http://yoursite.com/2018/07/03/zhuan-java3/index.html">
+<meta property="og:site_name" content="HuaRongxie&#39;s Blog">
+<meta property="og:description" content="final、finally、finalize的区别final:  final修饰的类不可以被继承。 final修饰的方法不可以被重写。 final修饰的变量引用不可以改变。  finally:finally是Java保证重点代码一定要被执行的一种机制。我们可以使用try-finally或者try-catch-finally来进行类似关闭JDBC连接、保证unlock锁等动作。 finalize:f">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-10T05:10:17.016Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java基础">
+<meta name="twitter:description" content="final、finally、finalize的区别final:  final修饰的类不可以被继承。 final修饰的方法不可以被重写。 final修饰的变量引用不可以改变。  finally:finally是Java保证重点代码一定要被执行的一种机制。我们可以使用try-finally或者try-catch-finally来进行类似关闭JDBC连接、保证unlock锁等动作。 finalize:f">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/03/zhuan-java3/">
+
+
+
+
+
+  <title>Java基础 | HuaRongxie's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HuaRongxie's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/03/zhuan-java3/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HuaRongxie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HuaRongxie's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java基础</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-03T12:59:58+08:00">
+                2018-07-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java基础/" itemprop="url" rel="index">
+                    <span itemprop="name">Java基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="final、finally、finalize的区别"><a href="#final、finally、finalize的区别" class="headerlink" title="final、finally、finalize的区别"></a>final、finally、finalize的区别</h2><p><strong>final</strong>:</p>
+<ol>
+<li>final修饰的类不可以被继承。</li>
+<li>final修饰的方法不可以被重写。</li>
+<li>final修饰的变量引用不可以改变。</li>
+</ol>
+<p><strong>finally</strong>:finally是Java保证重点代码一定要被执行的一种机制。我们可以使用try-finally或者try-catch-finally来进行类似关闭JDBC连接、保证unlock锁等动作。</p>
+<p><strong>finalize</strong>:finalize是基础类java.lang.Oject的一个方法。当一个对象可以被回收的时候，如果需要执行该对象的finalize()方法，那么就有可能在该方法中让对象重新被引用，从而实现自救。finalize()方法只能执行一次，如果回收的对象在之前调用了finalize()方法，后面回收时不会调用finalize()方法。finalize机制已经不推荐使用了，并且在JDK9开始被标记为deprecated。</p>
+<h2 id="int与Integer"><a href="#int与Integer" class="headerlink" title="int与Integer"></a>int与Integer</h2><p>Integer的默认值为null,int默认值为0；</p>
+<p>Integer是int的包装类,int是Java中的基本数据类型。Java中一共有8种基本数据类型。其中4种为整型，2种浮点类型，1种用于表示Unicode编码字符单元的字符类型char,1种用于表示真值的boolean。</p>
+<p><strong>整型</strong></p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>存储大小</th>
+<th>取值范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>byte</td>
+<td>1字节</td>
+<td>-128~127</td>
+</tr>
+<tr>
+<td>short</td>
+<td>2字节</td>
+<td>-32768~32767</td>
+</tr>
+<tr>
+<td>int</td>
+<td>4字节</td>
+<td>-2147483648~2147483647(正好超过20亿)</td>
+</tr>
+<tr>
+<td>long</td>
+<td>8字节</td>
+<td>-9223372036854775808~9223372036854775807</td>
+</tr>
+</tbody>
+</table>
+<p><strong>浮点类型</strong></p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>存储大小</th>
+<th>取值范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>float</td>
+<td>4字节</td>
+<td>约±3.40282347E+38F(有效位数6~7位)</td>
+</tr>
+<tr>
+<td>double</td>
+<td>8字节</td>
+<td>约±1.79769313486231570E+308(有效位数15位)</td>
+</tr>
+</tbody>
+</table>
+<p>double的数值精度是float类型的两倍，所以double又称为双精度数值。float类型的数值需要有后缀F(例如，3.14F)。若没有后缀，默认为double类型，也可以加后缀D(例如，3.14D)</p>
+<p><strong>字符类型</strong></p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>存储大小</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>char</td>
+<td>2字节</td>
+</tr>
+</tbody>
+</table>
+<p>char通常表示字符常量。例如‘A’是编码65所对应的字符常量。</p>
+<p><strong>boolean类型</strong></p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>存储大小</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>boolean</td>
+<td>1bit</td>
+</tr>
+</tbody>
+</table>
+<p>boolean类型有两个值:false和true。原来判断逻辑条件。</p>
+<h2 id="重载与重写"><a href="#重载与重写" class="headerlink" title="重载与重写"></a>重载与重写</h2><h4 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h4><p>重载存在于同一个类中，指的是一个方法与已经存在的方法名称上相同，但是参数列表(参数类型、个数、顺序至少一个)不同。需要注意的是，返回值类型不同，其他都相同不算重载。</p>
+<h4 id="重写"><a href="#重写" class="headerlink" title="重写"></a>重写</h4><p>重写存在于继承中，指的是子类实现了一个与父类在方法声明上完全相同的一个方法。</p>
+<p>为了满足里式替换原则，重写有两个限制:</p>
+<ol>
+<li>子类方法的访问权限必须大于等于父类方法。</li>
+<li>子类方法的返回类型必须是父类方法返回类型或者是其子类。</li>
+</ol>
+<p>使用@Override注解，可以让编译器帮忙检查是否满足以上两个条件。</p>
+<h2 id="抽象类与接口"><a href="#抽象类与接口" class="headerlink" title="抽象类与接口"></a>抽象类与接口</h2><h4 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h4><p>接口是抽象方法的一个集合，通过接口达到了API定义与实现分离的目的。接口无法被实例化，接口中的变量都隐含着public static final的意义。在Java 8之前，接口中的方法必须是抽象方法。Java 8开始，接口可以有default方法和static方法。常用的一些接口如Callable、Runnable、Comparator等在Java 8中添加了@FunctionalInterface注解，简单来说就是只有一个抽象方法的接口，通常建议使用@FunctionalInterface注解来标记。Lambda本身也可以看作是一类Function Inerface。</p>
+<h4 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h4><p>抽象类是无法被实例化的类，用abstract关键字修饰class，它的主要作用是代码重用。抽象类可以有0个或者多个抽象方法。抽象类大多抽取相关类的共用方法实现或者共同成员变量。然后通过继承的方式达到代码复用的目的。除了无法被实例化，形式上和普通类没有什么太多区别。</p>
+<h2 id="反射的用途与实现"><a href="#反射的用途与实现" class="headerlink" title="反射的用途与实现"></a>反射的用途与实现</h2><h4 id="反射的作用"><a href="#反射的作用" class="headerlink" title="反射的作用"></a>反射的作用</h4><ol>
+<li>在运行时判断任意一个对象所属的类。</li>
+<li>在运行时构造任意一个类的对象。</li>
+<li>在运行时判断一个类所具有的成员变量和方法。</li>
+<li>在运行时调用任何一个对象的方法。</li>
+</ol>
+<h4 id="反射的用途"><a href="#反射的用途" class="headerlink" title="反射的用途"></a>反射的用途</h4><ol>
+<li>使用IDE时，在一个类或者对象后输入”.”符号，编译器会自动列出属性和方法。</li>
+<li>很多框架都是配置化的(例如Spring通过XML文件配置Java Bean)为了保证框架的通用性，他们会根据配置文件加载不同的对象或者类，调用不同的方法，这个时候必须用到反射—运行时动态加载所需对象。</li>
+</ol>
+<h4 id="反射的基本运用"><a href="#反射的基本运用" class="headerlink" title="反射的基本运用"></a>反射的基本运用</h4><ol>
+<li><p>获取class对象(三种方式)</p>
+<p>a.class.forName();</p>
+<p>b.对象.class；</p>
+<p>c.对象.getClass()；</p>
+</li>
+<li><p>获取类的实例</p>
+<p>a.对于有空构造方法的类</p>
+<p>Object o = class对象.newInstance();//会调用空构造器，如果没有会报错</p>
+<p>b.对于没有空构造方法的，先获取他的构造对象。</p>
+<p>Constroctor constroctor = class对象.getConstroctor(String class,Integer class);</p>
+<p>Object obj = constroctor.newInstance(“yuanzhi”,1);//通过构造器对象的newInstance()方法进行对象的初始化。</p>
+</li>
+</ol>
+<h2 id="equals与”-”"><a href="#equals与”-”" class="headerlink" title="equals与”==”"></a>equals与”==”</h2><p>由于所有类继承自Object类，如果没有重写equals方法的话，调用的仍是Object类的方法，而Object类的equals方法返回的是==的判断。==比较引用，equals通常比较内容。</p>
+<h2 id="Exception-和Error，运行时异常与一般异常，检查异常-checked-与非检查异常-unchecked-的区别关系"><a href="#Exception-和Error，运行时异常与一般异常，检查异常-checked-与非检查异常-unchecked-的区别关系" class="headerlink" title="Exception 和Error，运行时异常与一般异常，检查异常(checked)与非检查异常(unchecked)的区别关系?"></a>Exception 和Error，运行时异常与一般异常，检查异常(checked)与非检查异常(unchecked)的区别关系?</h2><p>Java中只有<strong>Throwable</strong>类的实例才可以被抛出(throw)或者捕获(catch)，它是异常处理机制的基本组成类型。Exception和Error都是继承了Throwable类。</p>
+<p><strong>Exception</strong>是程序在正常运行中，可以预料的意外情况，并且应该被捕获，进行相应的处理。</p>
+<p><strong>Error</strong>是指正常情况下，不大可能出现的情况，绝大部分的Error都会导致程序(比如JVM)自身处于非正常、不可恢复的状态，所以也不需要去捕获。比如常见的OutOfMemoryError。</p>
+<p>Exception有可分为可检查异常与非检查异常，<strong>检查异常</strong>必须在代码中进行异常捕获处理，这是编译期处理的一部分。<strong>非检查异常</strong>就是运行时异常，可以通过编码避免的逻辑错误，具体根据需要是否捕获，并不会在编译期强制要求，比如常见的NullPointerException，ArrayIndexOutOfBoundsException。</p>
+<h4 id="try-catch-finally代码段"><a href="#try-catch-finally代码段" class="headerlink" title="try-catch-finally代码段"></a>try-catch-finally代码段</h4><ol>
+<li>当一个try后面跟了多个catch的时候，必须要先捕获小的异常再捕获大的异常。</li>
+<li>在finally中尽量不要使用return。</li>
+<li>尽量只捕获有必要的代码段。</li>
+<li>尽量不要捕获类似Exception这样的通用异常，而是应该捕获特定异常。</li>
+</ol>
+<h4 id="自定义异常"><a href="#自定义异常" class="headerlink" title="自定义异常"></a>自定义异常</h4><p>示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InvalidParamException</span> <span class="keyword">extends</span> <span class="title">Throwable</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">InvalidParamException</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在方法中可使用<code>throw new InvalidParamException(&quot;这是一个自定义异常&quot;);</code>来进行自定义异常的抛出。</p>
+<h4 id="throws与throw"><a href="#throws与throw" class="headerlink" title="throws与throw"></a>throws与throw</h4><p>throws用在声明方法时，表示该方法可能要抛出异常 。throw一般是在代码块的内部，当程序出现某种逻辑错误时由开发人员主动抛出某种特定类型的异常 。</p>
+<h4 id="从性能角度考虑，java异常处理"><a href="#从性能角度考虑，java异常处理" class="headerlink" title="从性能角度考虑，java异常处理"></a>从性能角度考虑，java异常处理</h4><ol>
+<li>try-catch代码段会产生额外的开销，它会影响JVM对代码的优化，所以尽量只捕获有必要的代码段，不要一个try包住整段的代码。</li>
+<li>Java每实例化一个Exception，都会对当时的栈进行快照，这是一个相对比较重的操作。如果异常发生的比较频繁，这个开销不能被忽略。</li>
+</ol>
+<h2 id="ArrayList与LinkedList"><a href="#ArrayList与LinkedList" class="headerlink" title="ArrayList与LinkedList"></a>ArrayList与LinkedList</h2><p>ArrayList:1.允许插入NULL值</p>
+<p> 2.允许重复</p>
+<p> 3.有序</p>
+<p> 4.不是线程安全的</p>
+<p>ArrayList底层是数组，所以需要连续的内存空间，在非末尾插入和删除，为了保证内存连续，需要使用System.arraycopy()进行数组数据的移动，每次扩容为原来的1.5倍，依然是使用System.arraycopy()方法进行扩容。</p>
+<p>LinkedList:1.允许插入NULL值</p>
+<p> 2.允许重复</p>
+<p> 3.有序</p>
+<p> 4.不是线程安全的</p>
+<p>LinkedList是基于双向链表实现的，Node作为存储单元，next和prev分别保存着后一个以及前一个的存储单元的引用。</p>
+<p>两者比较:</p>
+<ol>
+<li>ArrayList基于动态数组实现，LinkedList基于双向链表实现。</li>
+<li>ArrayList支持随机访问，LinkedList不支持。</li>
+<li>Linked在任意位置添加/删除元素更快。</li>
+</ol>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java基础/" rel="tag"># Java基础</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/02/zhuan-java2/" rel="next" title="ConcurrentHashMap">
+                <i class="fa fa-chevron-left"></i> ConcurrentHashMap
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/03/zhuan-java11/" rel="prev" title="HTTPS的简单认识">
+                HTTPS的简单认识 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">HuaRongxie</p>
+              <p class="site-description motion-element" itemprop="description">默而识之，学而不厌，诲人不倦，何有于我哉？</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#final、finally、finalize的区别"><span class="nav-number">1.</span> <span class="nav-text">final、finally、finalize的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#int与Integer"><span class="nav-number">2.</span> <span class="nav-text">int与Integer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重载与重写"><span class="nav-number">3.</span> <span class="nav-text">重载与重写</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#重载"><span class="nav-number">3.0.1.</span> <span class="nav-text">重载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重写"><span class="nav-number">3.0.2.</span> <span class="nav-text">重写</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#抽象类与接口"><span class="nav-number">4.</span> <span class="nav-text">抽象类与接口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#接口"><span class="nav-number">4.0.1.</span> <span class="nav-text">接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#抽象类"><span class="nav-number">4.0.2.</span> <span class="nav-text">抽象类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反射的用途与实现"><span class="nav-number">5.</span> <span class="nav-text">反射的用途与实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#反射的作用"><span class="nav-number">5.0.1.</span> <span class="nav-text">反射的作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#反射的用途"><span class="nav-number">5.0.2.</span> <span class="nav-text">反射的用途</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#反射的基本运用"><span class="nav-number">5.0.3.</span> <span class="nav-text">反射的基本运用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#equals与”-”"><span class="nav-number">6.</span> <span class="nav-text">equals与”==”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Exception-和Error，运行时异常与一般异常，检查异常-checked-与非检查异常-unchecked-的区别关系"><span class="nav-number">7.</span> <span class="nav-text">Exception 和Error，运行时异常与一般异常，检查异常(checked)与非检查异常(unchecked)的区别关系?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#try-catch-finally代码段"><span class="nav-number">7.0.1.</span> <span class="nav-text">try-catch-finally代码段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义异常"><span class="nav-number">7.0.2.</span> <span class="nav-text">自定义异常</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#throws与throw"><span class="nav-number">7.0.3.</span> <span class="nav-text">throws与throw</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从性能角度考虑，java异常处理"><span class="nav-number">7.0.4.</span> <span class="nav-text">从性能角度考虑，java异常处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ArrayList与LinkedList"><span class="nav-number">8.</span> <span class="nav-text">ArrayList与LinkedList</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">HuaRongxie</span>
+
+  
+</div>
+
+
+ 
+
+
+
+  
+
+
+
+ 
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

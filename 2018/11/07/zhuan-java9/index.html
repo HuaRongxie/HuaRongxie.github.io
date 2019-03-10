@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="MySQL数据库事务,MySQL隔离级别,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="MySQL数据库事务、隔离级别以及多版本并发控制(MVCC)事务事务就是一组原子性的SQL查询。也就是说，事务内的语句，要么全部执行成功，要么全部执行失败。 ACID原子性(atomicity) 一个事务必须被视为一个不可分割的最小单元，整个事务中的所有操作要么全部提交成功，要么全部失败回滚，对于一个事务来说，不可能只执行其中的一部分操作，这就是事务的原子性。 一致性(consistency) 数">
+<meta name="keywords" content="MySQL数据库事务,MySQL隔离级别">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL数据库事务、隔离级别、多版本并发控制(MVCC)">
+<meta property="og:url" content="http://yoursite.com/2018/11/07/zhuan-java9/index.html">
+<meta property="og:site_name" content="HuaRongxie&#39;s Blog">
+<meta property="og:description" content="MySQL数据库事务、隔离级别以及多版本并发控制(MVCC)事务事务就是一组原子性的SQL查询。也就是说，事务内的语句，要么全部执行成功，要么全部执行失败。 ACID原子性(atomicity) 一个事务必须被视为一个不可分割的最小单元，整个事务中的所有操作要么全部提交成功，要么全部失败回滚，对于一个事务来说，不可能只执行其中的一部分操作，这就是事务的原子性。 一致性(consistency) 数">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-10T05:21:47.815Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL数据库事务、隔离级别、多版本并发控制(MVCC)">
+<meta name="twitter:description" content="MySQL数据库事务、隔离级别以及多版本并发控制(MVCC)事务事务就是一组原子性的SQL查询。也就是说，事务内的语句，要么全部执行成功，要么全部执行失败。 ACID原子性(atomicity) 一个事务必须被视为一个不可分割的最小单元，整个事务中的所有操作要么全部提交成功，要么全部失败回滚，对于一个事务来说，不可能只执行其中的一部分操作，这就是事务的原子性。 一致性(consistency) 数">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/07/zhuan-java9/">
+
+
+
+
+
+  <title>MySQL数据库事务、隔离级别、多版本并发控制(MVCC) | HuaRongxie's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HuaRongxie's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/07/zhuan-java9/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HuaRongxie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HuaRongxie's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MySQL数据库事务、隔离级别、多版本并发控制(MVCC)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-07T13:18:57+08:00">
+                2018-11-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="MySQL数据库事务、隔离级别以及多版本并发控制-MVCC"><a href="#MySQL数据库事务、隔离级别以及多版本并发控制-MVCC" class="headerlink" title="MySQL数据库事务、隔离级别以及多版本并发控制(MVCC)"></a>MySQL数据库事务、隔离级别以及多版本并发控制(MVCC)</h1><h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><p>事务就是一组原子性的SQL查询。也就是说，事务内的语句，要么全部执行成功，要么全部执行失败。</p>
+<h3 id="ACID"><a href="#ACID" class="headerlink" title="ACID"></a>ACID</h3><p><strong>原子性(atomicity)</strong></p>
+<p>一个事务必须被视为一个不可分割的最小单元，整个事务中的所有操作要么全部提交成功，要么全部失败回滚，对于一个事务来说，不可能只执行其中的一部分操作，这就是事务的原子性。</p>
+<p><strong>一致性(consistency)</strong></p>
+<p>数据库总是从一个一致性的状态转换到另外一个一致性的状态。一致性确保了事务只要没有最终提交，就不会把事务中所作的修改保存到数据库中。</p>
+<p><strong>隔离性(isolation)</strong></p>
+<p>通常来说(因为要考虑隔离级别，所以说是通常情况)，一个事务所作的修改在最终提交之前，对其他事务是不可见的。</p>
+<p><strong>持久性(durability)</strong></p>
+<p>一旦事务提交，其所作的修改就会永久保存到数据库中。此时即使系统奔溃，修改的数据也不会丢失。持久性是个模糊的概念，因为持久性也分很多级别。有些持久性策略能够提供非常强的安全保障，而有些则未必。而且不可能做到百分之百的持久性保证的策略。</p>
+<h3 id="隔离级别"><a href="#隔离级别" class="headerlink" title="隔离级别"></a>隔离级别</h3><p>隔离性其实比想象的要复杂。在SQL标准中定义了四种隔离级别，每一种级别规定了一个事务中所作的修改，哪些在事务间是可见的，哪些是不可见的。较低级别的隔离通常可以执行更高的并发，系统的开销也更低。</p>
+<p><strong>READ UNCOMMITTED(读未提交)</strong></p>
+<p>在READ UNCOMMITTED级别，事务中的修改即使是没有提交，对其他事务也是可见的。事务可以读取到未提交的数据，这被称为脏读(Dirty Read)。从性能来说，READ UNCOMMITTED不会比其他级别好太多，但缺乏其他级别的很多优势，所以实际应用很少。</p>
+<p><strong>READ COMMITTED(读提交)</strong></p>
+<p>大多数数据库的默认隔离级别都是READ COMMITTED(但MySQL不是)。READ COMMITTED满足隔离性的简单定义:一个事务开始时，只能看见已经提交的事务所作的修改。换句话说，一个事务从开始直到提交之前，所作的任何修改对其他事务都是不可见的。这个级别有时候会产生不可重复读(nonrepeatable read)，因为执行两次执行同样的查询，可能会得到不一样的结果。</p>
+<p><strong>REPEATABLE READ(可重复读)</strong></p>
+<p>REPEATABLE READ解决了脏读，和不可重复读的问题。但是无法解决幻读(Phantom Read)的问题。幻读是指当某个事务在读取某个范围内的记录时，另外一个事务又在范围内插入新的记录，当之前的事务再次读取该范围的记录，会产生幻行(Phantom Row)。InnoDB和XtraDB存储引擎通过多版本并发控制(MVCC)解决了幻读的问题。(可重复读是MySQL的默认事务隔离级别)。</p>
+<p><strong>SERIALIZABLE(可串行化)</strong></p>
+<p>SERIALIZABLE是最高隔离级别。它通过强制事务串行执行，避免幻读问题。简单来说，SERIALIZABLE会在读取的每一行上都加锁，所以可能导致大量的超时和锁争用的问题。实际应用很少使用该隔离级别，只有在非常需要确保数据一致性而且可以接受没有并发的情况下，才考虑采用该级别。</p>
+<table>
+<thead>
+<tr>
+<th>隔离级别</th>
+<th>脏读可能性</th>
+<th>不可重复读可能性</th>
+<th>幻读可能性</th>
+<th>加锁读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>READ UNCOMMITTED</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>READ COMMITTED</td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>REPEATABLE READ</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>SERIALIZABLE</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="多版本并发控制-MVCC"><a href="#多版本并发控制-MVCC" class="headerlink" title="多版本并发控制(MVCC)"></a>多版本并发控制(MVCC)</h3><p>MySQL的大多数事务型存储引擎实现的都不是简单的行级锁。基于提升并发性能的考虑，它们一般都同时实现了多版本并发控制(MVCC)。不仅是MySQL，包括Oracle、PostgreSQL等其他数据库系统也实现了MVCC，但是实现机制不尽相同，因为MVCC没有一个统一的实现标准。</p>
+<p>可以认为MVCC是行级锁的一个变种，但是它在多数情况下都避免了加锁操作，因此开销更低。虽然实现机制有所不同，但大都实现了非阻塞的读操作，写操作也只锁定必要的行。</p>
+<p>MVCC的实现，是通过保存数据在某个时间点的快照来实现的。也就是说，不管执行多长时间，每个事物看到的数据都是一致的。根据事务开始时间的不同，每个事物对同一张表，同一时刻看到的数据可能是不一样的。</p>
+<p>InnoDB的MVCC，是通过在每行记录后面保存两个隐藏的列来实现的。这两个列，一个保存了行的创建时间，一个保存行的过期时间或者删除时间。存储的并不是实际的时间值，而是系统版本号(system version number)。每开始一个新的事务，系统版本号都会自动递增。事务开始时刻的系统版本号会作为事务的版本号，用来和查询到的每行记录的版本号进行比较。</p>
+<p><strong>MVCC在REPEATABLE READ隔离级别下的操作</strong></p>
+<p><strong>SELECT</strong></p>
+<p>InnoDB会根据以下两个条件检查每行记录:</p>
+<p>a.InnDB只查找版本早于当前事务版本的数据行(也就是，行的系统版本号小于或者等于事务的系统版本号)，这样可以确保事务读取的行，要么是在事务开始前已经存在，要么是事务自身插入或者修改过的。</p>
+<p>b.行的删除版本要么未定义，要么大于当前事务版本号。这可以确保事务读取到的行，在事务开始之前未被删除。</p>
+<p>只有符合上述两个条件的记录，才能返回作为查询的结果。</p>
+<p><strong>INSERT</strong></p>
+<p>InnoDB为新插入的每一行保存当前系统版本号作为行版本号。</p>
+<p><strong>DELETE</strong></p>
+<p>InnoDB为删除的每一行保存当前系统版本号作为行删除标识。</p>
+<p><strong>UPDATE</strong></p>
+<p>InnoDB先插入一行新记录，保存当前系统版本号作为行版本号，同时保存当前系统版本号到原来的行作为行的删除标识。</p>
+<p>保存这样两个系统版本号，使大多数读操作都可以不用加锁。这样设计使得读操作很简单，性能很好，并且也能保证只会读到符合标准的行。不足之处是每行记录都是需要额外的存储空间，需要做更多的行检查工作以及一些额外的维护工作。</p>
+<p>MVCC只在REPEATABLE READ和READ COMMITTED两个隔离级别下工作。其他两个隔离级别都和MVCC不兼容。因为READ UNCOMMITTED总是读到最新的数据行，而不是符合当前事务版本的数据行。SERIALIZABLE则会对所有读取的行都加锁。</p>
+<h3 id="InnoDB中幻读的解决到底是依赖Next-Key-Locks还是MVCC"><a href="#InnoDB中幻读的解决到底是依赖Next-Key-Locks还是MVCC" class="headerlink" title="InnoDB中幻读的解决到底是依赖Next-Key Locks还是MVCC?"></a>InnoDB中幻读的解决到底是依赖Next-Key Locks还是MVCC?</h3><p>首先读分为:快照读、当前读。</p>
+<ul>
+<li><p>快照读。例: SELECT * FROM table WHERE …;</p>
+</li>
+<li><p>当前读。当前读都是先读后写,只能读当前的值特殊的读操作。比如更新，插入，删除操作，属于当前读，需要加锁。</p>
+<p>SELECT <em>FROM table WHERE ? lock in share mode;SELECT</em> from FROM table WHERE ? for update;<br>INSERT INTO table values (…);<br>UPDATE table SET ? WHERE ?;</p>
+</li>
+</ul>
+<p>结论:</p>
+<ul>
+<li>对于快照读来讲，幻读的解决依赖于MVCC，使用 MVCC 读取的是快照中的数据，这样可以减少加锁所带来的开销。</li>
+<li>对于当前读，读取的是最新的数据，需要加锁，依赖Next-Key Locks。</li>
+</ul>
+<p><em>拓展</em>:</p>
+<p>Next-key Locks:是InnoDB存储引擎的一种锁实现。</p>
+<p>Record Locks:锁定一个记录上的索引，而不是记录本身。</p>
+<p>Gap Locks:锁定索引之间的间隙，但是不包含索引本身。</p>
+<p>Next-key Locks:是上述两者的结合，不仅锁定一个记录上的索引，也锁定索引之间的间隙。</p>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MySQL数据库事务/" rel="tag"># MySQL数据库事务</a>
+          
+            <a href="/tags/MySQL隔离级别/" rel="tag"># MySQL隔离级别</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/05/function/" rel="next" title="函数">
+                <i class="fa fa-chevron-left"></i> 函数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/10/zhuan-java8/" rel="prev" title="MySQL中索引的类型">
+                MySQL中索引的类型 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">HuaRongxie</p>
+              <p class="site-description motion-element" itemprop="description">默而识之，学而不厌，诲人不倦，何有于我哉？</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL数据库事务、隔离级别以及多版本并发控制-MVCC"><span class="nav-number">1.</span> <span class="nav-text">MySQL数据库事务、隔离级别以及多版本并发控制(MVCC)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#事务"><span class="nav-number">1.1.</span> <span class="nav-text">事务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ACID"><span class="nav-number">1.1.1.</span> <span class="nav-text">ACID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隔离级别"><span class="nav-number">1.1.2.</span> <span class="nav-text">隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多版本并发控制-MVCC"><span class="nav-number">1.1.3.</span> <span class="nav-text">多版本并发控制(MVCC)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB中幻读的解决到底是依赖Next-Key-Locks还是MVCC"><span class="nav-number">1.1.4.</span> <span class="nav-text">InnoDB中幻读的解决到底是依赖Next-Key Locks还是MVCC?</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">HuaRongxie</span>
+
+  
+</div>
+
+
+ 
+
+
+
+  
+
+
+
+ 
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

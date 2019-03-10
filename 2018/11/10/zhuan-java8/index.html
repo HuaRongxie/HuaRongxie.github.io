@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="MySQL索引,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="MySQL中索引的类型索引(在MySQL中也被叫做”键(key)”)是存储引擎用于快速找到记录的一种数据结构。这是索引的基本功能。 索引的类型索引很很多种类型，可以为不同的场景提供更好的性能。在MySQL中，索引是在存储引擎层实现而不是服务器层。所以不同的存储引擎索引的工作方式不同，也不是所有存储引擎都支持所有类型的索引。即使多个存储引擎支持同一种类型的索引，其底层的实现也可能不同。 B-Tree">
+<meta name="keywords" content="MySQL索引">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL中索引的类型">
+<meta property="og:url" content="http://yoursite.com/2018/11/10/zhuan-java8/index.html">
+<meta property="og:site_name" content="HuaRongxie&#39;s Blog">
+<meta property="og:description" content="MySQL中索引的类型索引(在MySQL中也被叫做”键(key)”)是存储引擎用于快速找到记录的一种数据结构。这是索引的基本功能。 索引的类型索引很很多种类型，可以为不同的场景提供更好的性能。在MySQL中，索引是在存储引擎层实现而不是服务器层。所以不同的存储引擎索引的工作方式不同，也不是所有存储引擎都支持所有类型的索引。即使多个存储引擎支持同一种类型的索引，其底层的实现也可能不同。 B-Tree">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-10T05:20:32.009Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL中索引的类型">
+<meta name="twitter:description" content="MySQL中索引的类型索引(在MySQL中也被叫做”键(key)”)是存储引擎用于快速找到记录的一种数据结构。这是索引的基本功能。 索引的类型索引很很多种类型，可以为不同的场景提供更好的性能。在MySQL中，索引是在存储引擎层实现而不是服务器层。所以不同的存储引擎索引的工作方式不同，也不是所有存储引擎都支持所有类型的索引。即使多个存储引擎支持同一种类型的索引，其底层的实现也可能不同。 B-Tree">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/10/zhuan-java8/">
+
+
+
+
+
+  <title>MySQL中索引的类型 | HuaRongxie's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HuaRongxie's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/10/zhuan-java8/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HuaRongxie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HuaRongxie's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MySQL中索引的类型</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-10T13:18:35+08:00">
+                2018-11-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="MySQL中索引的类型"><a href="#MySQL中索引的类型" class="headerlink" title="MySQL中索引的类型"></a>MySQL中索引的类型</h1><p>索引(在MySQL中也被叫做”键(key)”)是存储引擎用于快速找到记录的一种数据结构。这是索引的基本功能。</p>
+<h3 id="索引的类型"><a href="#索引的类型" class="headerlink" title="索引的类型"></a>索引的类型</h3><p>索引很很多种类型，可以为不同的场景提供更好的性能。在MySQL中，索引是在存储引擎层实现而不是服务器层。所以不同的存储引擎索引的工作方式不同，也不是所有存储引擎都支持所有类型的索引。即使多个存储引擎支持同一种类型的索引，其底层的实现也可能不同。</p>
+<h4 id="B-Tree索引"><a href="#B-Tree索引" class="headerlink" title="B-Tree索引"></a>B-Tree索引</h4><p>B-Tree索引使用B-Tree数据结构来存储数据。大多数MySQL引擎都支持这种索引，Archive引擎是例外。</p>
+<p>使用术语”B-Tree”，是因为MySQL在CREATE TABLE和其他语句中也使用该关键字。不过，底层不同的存储引擎也可能使用不同的存储结构。例如，NDB集群存储引擎内部使用了T-Tree结构存储这种索引，即使其名字是BTree;InnoDB则使用的是B+Tree。</p>
+<p>B-Tree通常意味着所有的值都是按照顺序存储的，并且每个叶子节点到根的距离都是相等的。</p>
+<p>B-Tree索引能够加快访问数据的速度，因为存储引擎不再需要进行全表扫描来获取数据，而是从索引的根节点开始搜索，根节点的槽中存放了指向子节点的指针，存储引擎根据这些指针向下层查找。通过比较节点页的值和要查找的值可以找到合适的指针进入下一层子节点。这些指针实际上定义了子节点页中值的上限和下限。最终存储引擎要么找到对应的值，要么该记录不存在。</p>
+<p>叶子节点比较特别，因为它们的指针指向的是被索引的数据，而不是其他节点页。</p>
+<p>B-Tree对索引列是顺序组织存储的，索引很适合查找范围数据。例如”找出A到C开头的名字”<br><strong>索引的维护</strong><br>B+树为了维护索引的有序性，在插入新值的时候需要做必要的维护。如果插入新的行，需要挪动后面的数据，空出位置，而更糟糕的情况是，如果插入所在数据页已经满了，根据B+树算法，这时候需要申请一个新的数据页，然后挪动部分数据过去。这个过程称为页分裂。这种情况下，性能自然会受到影响，除了性能外，页分裂操作还影响数据页的利用率。原本放在一个页的数据，现在分到两个页中，整体空间利用率降低大约50%。在相邻两个页由于删除了数据，利用率很低之后，会将数据页做合并。合并的过程，可以认为是分裂过程的逆过程。<br><strong>可以使用B-Tree索引的查询类型</strong></p>
+<ol>
+<li><strong>全值匹配</strong></li>
+</ol>
+<p>全值匹配是指和索引中的所有列进行匹配，例如前面提到的索引可查找名字Cuba Allen、出生于1960-01-01的人。</p>
+<ol>
+<li><strong>匹配最左前缀</strong></li>
+</ol>
+<p>可以只匹配某一列的值的开头部分。例如前面提到的索引可以用于查找所有以J开头的姓氏的人。这里也只使用了索引的第一列。</p>
+<ol>
+<li><strong>匹配范围值</strong></li>
+</ol>
+<p>例如前面提到的索引可以用于查找姓氏在Allen和Barrymore之间的人。这里也只使用了索引的第一列。</p>
+<ol>
+<li><strong>精确匹配某一列并范围匹配另外一列</strong></li>
+</ol>
+<p>例如前面提到的索引可以用于查找所有姓为Allen，并且名字是字母K开头的人。这里第一列姓氏last_name全匹配，第二列范围匹配。</p>
+<p><strong>B-Tree索引的使用限制</strong></p>
+<ol>
+<li><strong>如果不是按照索引的最左列开始查找，则无法使用索引</strong>。例如前面提到的索引无法查找名字为yuanzhi的人，也无法查找某个特定生日的人，也无法查找姓氏以某个字母结尾的人。因为这些都不是最左数据列。</li>
+<li><strong>不能跳过索引中的列</strong>。例如前面提到的索引无法查找last_name为Smith并且某个日期出生的人。如果不指定first_name这一列，则MySQL只能使用索引的第一列。</li>
+<li><strong>如果查询中有个某个列的范围查询，则其右边所有列都无法使用索引优化查找</strong>。例如查询WHERE last_name=’Smith’ AND first_name LIKE ‘J%’ AND dob = ‘1976-12-23’,这里只能使用索引的前两列，因为LIKE是一个范围条件。</li>
+</ol>
+<p>索引列的顺序很重要，这些限制都和索引列的顺序有关。在优化性能的时候，可能需要使用相同的列但顺序不同的索引来满足不同类型的查询需求。</p>
+<h3 id="哈希索引"><a href="#哈希索引" class="headerlink" title="哈希索引"></a>哈希索引</h3><p>哈希索引(hash index)基于哈希表实现，只有精确匹配索引所有列的查询才有效。对于每一行数据，存储引擎都会对所有的索引列计算一个哈希码(hash code)，哈希码是一个较小的值，并且不同键值的行计算出来的哈希码也不一样。哈希索引将所有的哈希码存储在索引中，同时在哈希表中保存指向每个数据行的指针。</p>
+<p>在MySQL中，只有Memory引擎显式支持哈希索引。这也是Memory引擎表的默认索引类型，Memory引擎同时也支持B-Tree索引。值得一提的是，Memory引擎是支持非唯一哈希索引的，如果多个列的哈希值相同，索引会以链表的方式存放多个记录指针到同一个哈希条目中。</p>
+<p>例如<code>SELECT last_name FROM test WHERE first_name = &#39;Peter&#39;;</code>MySQL先计算‘Peter’的哈希值，并使用该值寻找对应的记录指针。然后根据哈希值，找到指向数据行的指针，最后一步是判断数据行的值是否为‘Peter’，以确保就是要查找的行。</p>
+<p>因为哈希索引只需要存储哈希值，索引结构十分紧凑，这也让哈希索引查找的速度非常快。然而，哈希索引也有他的限制:</p>
+<ol>
+<li>哈希索引只包含哈希值和行指针，不存储字段值，所以不能使用索引中的值来避免读取行。</li>
+<li>哈希索引数据不是按照索引值顺序存储的，所以无法用于排序。</li>
+<li>哈希索引也不支持索引列的匹配查找。因为哈希索引使用索引列的全部内容来计算哈希值。</li>
+<li>当出现哈希冲突的时候(不同的索引列值却有相同的哈希值)，存储引擎必须遍历链表中所有的行指针，逐行进行比较，直到找到所有符合条件的行。哈希冲突很多的话，索引维护操作的代价也会很高。例如从表中删除一行时，存储引擎需要遍历对应哈希值的链表的每一行，找到并删除对应行 的引用，冲突越多，代价越大。</li>
+</ol>
+<p>InnoDB引擎有一个特殊的功能叫做“自适应哈希索引”。当InnoDB注意到某些索引值被使用得非常频繁时，它会在内存中基于B-Tree索引之上再创建一个哈希索引，这样让B-Tree索引也具有哈希索引的一些优点，比如快速哈希查找。这是一个完全自动的，内部行为，用户无法控制或者配置，不过有必要，完全可以关闭该功能。</p>
+<p>创建自定义哈希索引。让不支持哈希索引的存储引擎可以模拟和InnoDB一样创建哈希索引。</p>
+<h4 id="空间数据索引-R-Tree"><a href="#空间数据索引-R-Tree" class="headerlink" title="空间数据索引(R-Tree)"></a>空间数据索引(R-Tree)</h4><p>MyISAM表支持空间索引，可以用作地理数据存储。和B-Tree索引不同，空间数据索引无须前缀查询。可以从所有纬度来索引数据。查询时，可以有效地使用任意纬度来组合查询。必须使用MySQL的GIS相关函数如MBRCONTAINS()等来维护数据。MySQL的GIS支持并不完善，所以大部分人都不会使用这个特性。</p>
+<h4 id="全文索引"><a href="#全文索引" class="headerlink" title="全文索引"></a>全文索引</h4><p>全文索引是一种特殊类型的索引，它查找的是文本中的关键词，而不是直接比较索引中的值。全文搜索和其他几类索引的匹配方式完全不一样。全文索引更类似搜索引擎做的事情，而不是简单的WHERE条件匹配。</p>
+<p>在相同的列上同时创建全文索引和基于值的B-Tree索引不会有冲突，全文索引适用于MATCH AGAINST操作，而不是普通的WHERE条件操作。</p>
+<h3 id="索引的优点"><a href="#索引的优点" class="headerlink" title="索引的优点"></a>索引的优点</h3><p>最常见的B-Tree索引，按照顺序存储数据，所以MySQL可以用来做ORDER BY 和GROUP BY操作。因为数据是有序的，所以B-Tree会将相关的列值存储在一起。最后，因为所以中存储了实际的列值，所以有些查询可以只使用索引就能够完成全部查询。总结三个优点:</p>
+<ol>
+<li>索引大大减少了服务器需要扫描的数据量。</li>
+<li>索引可以帮助服务器避免排序和临时表。</li>
+<li>索引可以将随机I/O变为顺序I/O。</li>
+</ol>
+<h3 id="主键索引与非主键索引的区别"><a href="#主键索引与非主键索引的区别" class="headerlink" title="主键索引与非主键索引的区别"></a>主键索引与非主键索引的区别</h3><p>主键索引的叶子节点存放的是整行数据，在InnoDB里，主键索引也被称为聚簇索引。<br>非主键索引的叶子节点存放的是主键的值。在InnoDB里，非主键索引也被称为二级索引。</p>
+<ul>
+<li>如果语句是SELECT * FROM T WHRER 主键 = 1,即主键查询方式，则只需要搜索主键这棵B+树；</li>
+<li>如果语句是SELECT * FROM T WHRER 非主键 = 1，则需要先搜索这个非主键索引树，得到主键Id，再到主键索引树搜索一次。这个过程称为回表。</li>
+</ul>
+<p>也就是说，基于非主键索引的查询需要多扫描一棵索引树。因此，应该尽量使用主键查询。并且主键长度越小，普通索引的叶子节点就越小，普通索引占用的空间也就越小。</p>
+<p>聚簇索引并不是一种单独的索引类型，而是一种数据存储方式。具体的细节依赖于实现方式，InnoDB的聚簇索引实际上在同一个结构中保存了B-Tree索引和数据行。当表有聚簇索引时，它的数据行实际上是存放在索引的叶子页中的。术语”聚簇”表示数据行和相邻的键值紧凑地存储在一起(实际上也不都成立)。因为无法同时吧数据行存放在两个不同的地方，所以一个表只能由一个聚簇索引。因为存储引擎负责实现索引，因此不是所有的存储引擎都支持聚簇索引。</p>
+<p>聚簇索引的优点:</p>
+<ul>
+<li>可以把相关数据保存在一起。例如在实现电子邮箱时，可以根据用户ID来聚集数据，这样只需要从磁盘中读取少数的数据页就能获取某个用户的全部邮件。如果没有使用聚簇索引，则没封邮件都可能导致一次磁盘I/O。</li>
+<li>数据访问更快。聚簇索引将索引和数据保存在同一个B-Tree中，因此从聚簇索引中获取数据通常比在非聚簇索引中查找要快。</li>
+<li>使用覆盖索引扫描的查询可以直接使用叶节点中的主键值。</li>
+</ul>
+<p>聚簇索引的缺点:</p>
+<ul>
+<li><p>聚簇数据最大限度地提高了I/O密集型应用的性能，但如果数据全部都放在内存中，则访问的顺序就没有那么重要了，聚簇索引也没什么优势了。</p>
+</li>
+<li><p>插入速度严重依赖于插入顺序。安卓主键的顺序插入是加载数据到InnoDB表中速度最快的方式。但如果不是按照主键顺序加载数据，那么在加载完成之后最后使用OPTIMIZE TABLE命令重新组织一下表。</p>
+</li>
+<li><p>更新聚簇索引列的代价很高，因为会强制InnoDB将每个被更新的行移到新的位置。</p>
+</li>
+<li><p>基于聚簇索引的表在插入新行，或者主键被更新导致需要移动行的时候，可能面临“页分裂(page split)”的问题。当行的主键值要求必须将这一行插入到某个已满的页中时，存储引擎会将该页分裂成两个页面来容纳该行，这就是一次页分裂操作。页分裂会导致表占用更多的磁盘空间。</p>
+</li>
+<li><p>聚簇索引可能导致全表扫描变慢，尤其是行比较稀疏，或者由于页分裂导致数据存储不连续。</p>
+</li>
+<li><p>二级索引(非聚簇索引)可能比想象的要更大，因为在二级索引的叶子节点包含了引用行的主键列。</p>
+</li>
+<li><p>二级索引(非聚簇索引)访问需要两次索引查找。(二级索引叶子节点保存的不是指向行的物理位置的指针，而是行的主键值。这意味着通过二级索引查找行，存储引擎需要找到二级索引的叶子节点获得对应的主键值，然后根据这个值去聚簇索引中查找到对应的行。对于InnoDB，自适应哈希索引能够减少这样的重复工作)</p>
+<h3 id="覆盖索引、联合索引、索引下推"><a href="#覆盖索引、联合索引、索引下推" class="headerlink" title="覆盖索引、联合索引、索引下推"></a>覆盖索引、联合索引、索引下推</h3><p>覆盖索引</p>
+<p>:当索引已经覆盖了我们的查询需求时，称为覆盖索引。</p>
+<p>由于覆盖索引可以减少树的搜索次数，显著提升查询性能，所以使用覆盖索引是一个常用的性能优化手段。</p>
+<p>联合索引</p>
+<p>:两个或者两个以上列的索引称为联合索引，又称复合索引。</p>
+<p>根据创建联合索引的顺序，以最左原则进行where检索。在建立联合索引的时候，如何安排索引内的字段顺序，主要看索引的复用能力，因为支持最左前缀，所以当已经有了(a,b)这个联合索引之后，一般就不需要单独在a上建立索引了。因此，第一原则是，如果通过调整顺序，可以少维护一个索引，那么这个顺序往往是需要优先考虑的。但是当查询条件里只有b的语句，是无法使用(a,b)这个联合索引的，这个时候你不得不维护另外一个索引，也就是说你需要同时维护(a,b)、(b)这两个索引。这个时候，需要考虑的原则就是空间了，如果a的字段比b的字段大，那就建议创建一个(a,b)的联合索引和一个(b)的单字段索引。</p>
+<p>索引下推</p>
+<p>:</p>
+<p>例如SQL语句:SELECT * FROM T WHERE name LIKE ‘丁%’ AND age = 10;有联合索引(name,age)。</p>
+<p>那么此时只能使用name字段。当然还要判断其他条件是否满足。</p>
+<p>在MySQL5.6之前，只能从找到name满足条件的，然后一个一个回表。到主键索引中找出数据行，再对比字段值。</p>
+<p>再MySQL引入的索引下推优化(index condition pushdown),可以在索引遍历过程中，对索引中包含的字段先做判断，直接过滤掉不满足条件的记录，</p>
+<p>减少回表次数</p>
+<p>。</p>
+</li>
+</ul>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MySQL索引/" rel="tag"># MySQL索引</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/07/zhuan-java9/" rel="next" title="MySQL数据库事务、隔离级别、多版本并发控制(MVCC)">
+                <i class="fa fa-chevron-left"></i> MySQL数据库事务、隔离级别、多版本并发控制(MVCC)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/23/iterator/" rel="prev" title="迭代器">
+                迭代器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">HuaRongxie</p>
+              <p class="site-description motion-element" itemprop="description">默而识之，学而不厌，诲人不倦，何有于我哉？</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL中索引的类型"><span class="nav-number">1.</span> <span class="nav-text">MySQL中索引的类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#索引的类型"><span class="nav-number">1.0.1.</span> <span class="nav-text">索引的类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#B-Tree索引"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">B-Tree索引</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#哈希索引"><span class="nav-number">1.0.2.</span> <span class="nav-text">哈希索引</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#空间数据索引-R-Tree"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">空间数据索引(R-Tree)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#全文索引"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">全文索引</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引的优点"><span class="nav-number">1.0.3.</span> <span class="nav-text">索引的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主键索引与非主键索引的区别"><span class="nav-number">1.0.4.</span> <span class="nav-text">主键索引与非主键索引的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#覆盖索引、联合索引、索引下推"><span class="nav-number">1.0.5.</span> <span class="nav-text">覆盖索引、联合索引、索引下推</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">HuaRongxie</span>
+
+  
+</div>
+
+
+ 
+
+
+
+  
+
+
+
+ 
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
