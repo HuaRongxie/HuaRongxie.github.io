@@ -344,174 +344,21 @@
       
         
           
-            <h1 id="标准库类型string"><a href="#标准库类型string" class="headerlink" title="标准库类型string"></a>标准库类型string</h1><p>string表示可变长的字符序列。</p>
-<ul>
-<li>使用string类型必须首先包含头文件</li>
-<li>作为标准库的一部分，string定义在命名空间std中。</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br></pre></td></tr></table></figure>
-<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>一个类可以定义很多种初始化对象的方式，但是这些方式之间必须有所区别：</p>
-<ul>
-<li>或者是初始值数量不同</li>
-<li>或者是初始值类型不同</li>
-</ul>
-<p><strong>以下是初始化string的方式：</strong></p>
-<ol>
-<li>默认初始化</li>
-</ol>
-<p>通过默认的方式初始化一个string对象，得到的s1是个空字符串。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> s1;			<span class="comment">//默认初始化</span></span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>用另一个string进行初始化</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s2</span><span class="params">(s1)</span></span>;		<span class="comment">//s2是s1的副本</span></span><br><span class="line"><span class="built_in">string</span> s2 = s1;		<span class="comment">//等价于s2(s1)</span></span><br></pre></td></tr></table></figure>
-<ol start="3">
-<li>给定一个字符串字面值</li>
-</ol>
-<p>则该字面值中除了最后一个空字符外其他所有的字符都被拷贝到新创建的string对象中去。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s3</span><span class="params">(“value”)</span></span>;	<span class="comment">//s3是字面值”value”的副本，除了字面值最后一个空字符外</span></span><br><span class="line"><span class="built_in">string</span> s3 = “value”;	<span class="comment">//同上</span></span><br></pre></td></tr></table></figure>
-<ol start="4">
-<li>给定一个数字和一个字符</li>
-</ol>
-<p>则string对象的内容是给定字符连续重复若干次后得到的序列。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s4</span><span class="params">(n,’c’)</span></span>;		<span class="comment">//把s4初始化为由连续n个字符c组成的串</span></span><br></pre></td></tr></table></figure>
-<h4 id="直接初始化和拷贝初始化"><a href="#直接初始化和拷贝初始化" class="headerlink" title="直接初始化和拷贝初始化"></a>直接初始化和拷贝初始化</h4><p>像用“=”等号初始化一个变量是拷贝初始化，反之则是直接初始化。</p>
-<p>而像上面的s4那样初始化用到的值有多个，一般来说只能使用直接初始化的方式。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> s5 = <span class="string">"hi"</span>;		<span class="comment">//拷贝初始化</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s6</span><span class="params">(<span class="string">"hi"</span>)</span></span>;		<span class="comment">//直接初始化</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s7</span><span class="params">(<span class="number">10</span>, <span class="string">'C'</span>)</span></span>;		<span class="comment">//直接初始化，s7为cccccccccc</span></span><br></pre></td></tr></table></figure>
-<h4 id="string对象上的操作"><a href="#string对象上的操作" class="headerlink" title="string对象上的操作:"></a><strong>string对象上的操作:</strong></h4><p>以下是大多数操作：</p>
-<table>
-<thead>
-<tr>
-<th>os&lt;&lt;s</th>
-<th>将s写到输出流os中，返回os</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>is&gt;&gt;s</td>
-<td>将is中读出字符串赋给s，字符串以<strong>空白分隔</strong>，返回is</td>
-</tr>
-<tr>
-<td>getline(is,s)</td>
-<td>从is中读取一行赋给s，返回is</td>
-</tr>
-<tr>
-<td>s.empty()</td>
-<td>s为空返回true，否则返回false</td>
-</tr>
-<tr>
-<td>s.size()</td>
-<td>返回s中字符的个数</td>
-</tr>
-<tr>
-<td>s[n]</td>
-<td>返回s中第n个字符的引用，位置从0计起</td>
-</tr>
-<tr>
-<td>s1+s2</td>
-<td>返回s1和s2连接后的结果</td>
-</tr>
-<tr>
-<td>s1=s2</td>
-<td>用s2的副本代替s1中原来的字符</td>
-</tr>
-<tr>
-<td>s1==s2</td>
-<td>如果s1和s2中所含的字符完全一样，则他们相等</td>
-</tr>
-<tr>
-<td>s1!=s2</td>
-<td>与上相反</td>
-</tr>
-<tr>
-<td>&lt;,&lt;=,&gt;,&gt;=</td>
-<td>利用字符在字典中的顺序进行比较，对大小写敏感</td>
-</tr>
-</tbody>
-</table>
-<h4 id="读写string对象"><a href="#读写string对象" class="headerlink" title="读写string对象"></a>读写string对象</h4><p>可以使用io操作符读写string对象:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> s1, s2;			<span class="comment">//空字符串</span></span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; s1 &gt;&gt; s2;		<span class="comment">//将string对象读入s，遇到空白停止</span></span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt; s1 &lt;&lt; s2 &lt;&lt;<span class="built_in">endl</span>;	<span class="comment">//输出s</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在执行读取操作时，string对象会自动<strong>忽略开头的空白</strong>(即空格符、换行符、制表符等)并从第一个真正的字符读起，直到<strong>遇见下一处空白</strong>。</p>
-<p>例如输入”    hello world    “，那么输出会是”hello”和”world”，不会有空白。</p>
-<h5 id="使用getline-读取一整行："><a href="#使用getline-读取一整行：" class="headerlink" title="使用getline()读取一整行："></a>使用getline()读取一整行：</h5><p>有时我们希望最终得到的字符串中保留输入时的空白符，那么用getline()代替原来的&gt;&gt;运算符。他的参数是一个输入流和一个string对象，函数从给定的输入流中读入内容，直到遇到换行符位置(换行符也读入)，然后将内容存到string(不存换行符)。随后返回它的流参数。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> line;</span><br><span class="line">getline(<span class="built_in">cin</span>, line);			<span class="comment">//读入一整行</span></span><br><span class="line"><span class="built_in">cout</span>&lt;&lt; line &lt;&lt;<span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
-<h5 id="string-size-type类型："><a href="#string-size-type类型：" class="headerlink" title="string::size_type类型："></a>string::size_type类型：</h5><p>对于size()函数来说，返回一个int类型或者unsigned似乎都是合情合理的。但是size函数返回的是一个string::size_type类型的值。</p>
-<p>string类以及其他大多数标准库类型都定义了几种配套的类型，为了体现标准库类型与机器无关。</p>
-<p>它是一个<strong>无符号类型</strong>的值，而且<strong>足够存放</strong>下任何string对象的大小。</p>
-<h5 id="比较string对象："><a href="#比较string对象：" class="headerlink" title="比较string对象："></a>比较string对象：</h5><p>相等性运算符(== 、!=)和关系运算符(&lt;、&lt;=、&gt;、&gt;=)都按照字典顺序：</p>
-<ol>
-<li><p>如果两个string对象的长度不同，而且较短string对象的每个字符都与较长string对象对应位置上字符相同，就说较短string小于较长string</p>
-</li>
-<li><p>如果两个string对象在某些对应位置上不一致，则string对象比较的结果其实是string对象中第一对不同字符比较的结果</p>
-</li>
-</ol>
-<p>例：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> str = <span class="string">"Hello"</span>;</span><br><span class="line"><span class="built_in">string</span> phrase = <span class="string">"Hello World"</span>;</span><br><span class="line"><span class="built_in">string</span> slang = <span class="string">"Hiya"</span>;</span><br></pre></td></tr></table></figure>
-<p>根据规则1，str&lt;phrase。根据规则2, slang&gt;phrase 也 &gt;str。</p>
-<h5 id="字面值和string对象相加："><a href="#字面值和string对象相加：" class="headerlink" title="字面值和string对象相加："></a>字面值和string对象相加：</h5><p>标准库允许把字符字面值和字符串字面值转换成string对象。但必须确保每个加法运算符(+)两侧运算对象至少有一个是string：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> s3 = s1 + <span class="string">"value"</span>;					<span class="comment">//正确 </span></span><br><span class="line"><span class="built_in">string</span> s4 = <span class="string">"value"</span> + <span class="string">","</span>;					<span class="comment">//错误 两个都不是string</span></span><br><span class="line"><span class="built_in">string</span> s5 = s1 + <span class="string">"value"</span> + <span class="string">","</span> + <span class="string">"dog"</span>; 	<span class="comment">//正确，每个加法都有一个string</span></span><br><span class="line"><span class="built_in">string</span> s6 = <span class="string">"value"</span> + <span class="string">","</span> + s1;				<span class="comment">//错误，不能把字面值相加</span></span><br></pre></td></tr></table></figure>
-<p><strong><u>注意</u>：字符串字面值与string是不同的类型。</strong></p>
-<h5 id="string处理字符的一些函数"><a href="#string处理字符的一些函数" class="headerlink" title="string处理字符的一些函数:"></a>string处理字符的一些函数:</h5><p><strong>表:cctype头文件的函数</strong></p>
-<table>
-<thead>
-<tr>
-<th>isalnum(c)</th>
-<th>当c是字母或数字时为真</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>isalpha(c)</td>
-<td>当c是字母时为真</td>
-</tr>
-<tr>
-<td>iscntrl(c)</td>
-<td>当c是控制字符为真</td>
-</tr>
-<tr>
-<td>isdigit(c)</td>
-<td>当c是数字时为真</td>
-</tr>
-<tr>
-<td>isgraph(c)</td>
-<td>当c不是空格但可打印时为真</td>
-</tr>
-<tr>
-<td>islower(c)</td>
-<td>当c是小写字母时为真</td>
-</tr>
-<tr>
-<td>isprint(c)</td>
-<td>当c是可打印字符时为真(即c是空格或c具有可视形式)</td>
-</tr>
-<tr>
-<td>ispunct(c)</td>
-<td>当c是标点符号时为真(即c不是控制字符、数字、字母、可打印空白中的一种)</td>
-</tr>
-<tr>
-<td>isspace(c)</td>
-<td>当c是空白时为真(即c是空格、横向制表符、纵向制表符、回车符、换行符、进纸符中的一种)</td>
-</tr>
-<tr>
-<td>isupper(c)</td>
-<td>当c是大写字母时为真</td>
-</tr>
-<tr>
-<td>isxdigit(c)</td>
-<td>当c是十六进制数字时为真</td>
-</tr>
-<tr>
-<td>tolower(c)</td>
-<td>如果c是大写字母，输出对应的小写字母；否则原样输出c</td>
-</tr>
-<tr>
-<td>toupper(c)</td>
-<td>如果c是小写字母，输出对应的大写字母；否则原样输出c</td>
-</tr>
-</tbody>
-</table>
-<p><strong><u>建议</u>使用c++的兼容c的标准库头文件</strong>。c语言头文件为name.h而c++则将命名为cname。</p>
-          
+          标准库类型stringstring表示可变长的字符序列。
+
+使用string类型必须首先包含头文件
+作为标准库的一部分，string定义在命名空间std中。
+
+12#include&lt;string&gt;using std::string;
+初始化一个类可以定义很多种初始化对象的方式，但是这些方
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/10/20/string/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -651,305 +498,23 @@
       
         
           
-            <h1 id="变量、基本类型和类型别名"><a href="#变量、基本类型和类型别名" class="headerlink" title="变量、基本类型和类型别名"></a><strong>变量、基本类型和类型别名</strong></h1><p><strong>任何编程语言都具备一组公共语法特征，基本特征包括</strong>：</p>
-<ul>
-<li>整型、字符型等内置类型</li>
-<li>变量，用来为对象命名</li>
-<li>表达式和语句，用于操纵上述数据类型的具体值</li>
-<li>if或while等控制结构，这些结构允许我们有选择的执行一些语句。</li>
-<li>函数，用于定义可供随时调用的计算单元</li>
-</ul>
-<p><strong>大多数变成语言通过两种方式来进一步补充其基本特征</strong>：</p>
-<ol>
-<li>赋予程序员自定义数据类型的权利，从而实现扩展</li>
-<li>将一些有用的功能封装成库函数提供使用</li>
-</ol>
-<h2 id="基本内置类型"><a href="#基本内置类型" class="headerlink" title="基本内置类型"></a>基本内置类型</h2><p>C++定义了一套包括算术类型(arithmetic type)和空类型(void)在内的基本数据类型。其中算术类型包括字符、整型数、布尔值和浮点数。</p>
-<h3 id="C-基本类型大小"><a href="#C-基本类型大小" class="headerlink" title="C++基本类型大小"></a>C++基本类型大小</h3><p>int，long int，short int的宽度都可能随编译器而异。但有几条铁定的原则（ANSI/ISO制订的）：</p>
-<ul>
-<li>sizeof(short int) &lt;= sizeof(int)</li>
-<li>sizeof(int) &lt;= sizeof(long int)</li>
-<li>short int至少应为16位（2字节）</li>
-<li>long int至少应为32位。</li>
-</ul>
-<p><strong>表：c++算数类型</strong></p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>含义</th>
-<th>最小尺寸</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>bool</td>
-<td>布尔类型(true,false)</td>
-<td>未定义</td>
-</tr>
-<tr>
-<td>char</td>
-<td>字符</td>
-<td>8位</td>
-</tr>
-<tr>
-<td>wchar_t</td>
-<td>宽字符</td>
-<td>16位</td>
-</tr>
-<tr>
-<td>char16_t</td>
-<td>Unicode字符</td>
-<td>16位</td>
-</tr>
-<tr>
-<td>char32_t</td>
-<td>Unicode字符</td>
-<td>32位</td>
-</tr>
-<tr>
-<td>short</td>
-<td>短整型</td>
-<td>16位</td>
-</tr>
-<tr>
-<td>int</td>
-<td>整型</td>
-<td>16位</td>
-</tr>
-<tr>
-<td>long</td>
-<td>长整型</td>
-<td>32位</td>
-</tr>
-<tr>
-<td>long long</td>
-<td>长整型</td>
-<td>64位</td>
-</tr>
-<tr>
-<td>float</td>
-<td>单精度浮点数</td>
-<td>6位有效数字</td>
-</tr>
-<tr>
-<td>double</td>
-<td>双精度浮点数</td>
-<td>10位有效数字</td>
-</tr>
-<tr>
-<td>long double</td>
-<td>扩展进度浮点数</td>
-<td>10位有效数字</td>
-</tr>
-</tbody>
-</table>
-<p>c++标准制定了一个浮点数有效位数的最小值，然而大多数编译器实现了更高的进度。通常float以1个字节(32位)来表示，double以2个字节表示，long double以3或4个字节表示。</p>
-<h4 id="带符号和不带符号类型"><a href="#带符号和不带符号类型" class="headerlink" title="带符号和不带符号类型"></a>带符号和不带符号类型</h4><p>除去布尔型和扩展的字符型之外，其他可以划分为带符号的(signed)和不带符号的(unsigned)。带符号可表示正数、负数或0，无符号仅能表示大于等于0的值。</p>
-<p>类型int、short、long、long long都是带符号的，在前添加unsigned就是不带符号的类型，unsigned int可以缩写为unsigned。</p>
-<p>与其他整型不同 char被分为三种 char 、signed char、unsigned char。尽管字符型有3种但是字符的表现形式只有两种：带符号和无符号。类型char会表现为以上两种，具体由编译器决定。</p>
-<p>例：8bit的signed char表示范围定为-128~127。</p>
-<p><u><strong>建议：选择类型</strong></u></p>
-<ul>
-<li>当明确数值为正时，选用无符号类型</li>
-<li>使用int执行整数运算。在应用中，short常常太小而long一般和int一样的尺寸。如果数值超过了int表示范围。选用long long</li>
-<li>算数表达式中不要使用char 或 bool，只有在存放字符或布尔时使用它们。因为类型char在一些机器上是有符号而另一些是无符号，容易出问题。如果需要使用一个不大的整数明确是unsigned char 还是 signed char。</li>
-<li>执行浮点数运算选用double，因为float通常精度不够而且双精度浮点数和单精度浮点数计算代价相差无几。事实上对于某些机器来说双精度运算更快。</li>
-</ul>
-<h3 id="字面值常量（literal）"><a href="#字面值常量（literal）" class="headerlink" title="字面值常量（literal）"></a>字面值常量（literal）</h3><p>一个形如42的值被称作<strong>字面值常量</strong>，这样的值一望而知。每个字面值常量都对应一种数据类型，由它的形式和值决定。</p>
-<h4 id="整数和浮点型字面值："><a href="#整数和浮点型字面值：" class="headerlink" title="整数和浮点型字面值："></a><strong>整数和浮点型字面值：</strong></h4><p> 整型字面值写成 十进制、八进制、十六进制。以0开头的整数代表八进制数，以0x、0X代表十六进制。例如：</p>
-<p> 20  (十进制 )             024 (八进制)             0x14 (十六进制)</p>
-<p>整型字面值的数据类型由他的值和符号决定。默认情况，十进制字面值带符号数，八进制和十六进制带符号不带符号都可能。十进制是int、long、long long中能容纳下当前值的最小尺寸（例如三者最小是int）。八进制和十六进制是int 、unsigned int、…unsigned long long 中容纳下当前值的最小尺寸。如果一个字面值与之关联的最大数据类型都放不下则产生错误。short无字面值。</p>
-<p>负号字面值只是 字面值取反。例如-42，负号不在字面值内，它的作用仅仅是对字面值取负值而已。</p>
-<p>浮点数字面值表示为 小数或带e的科学计数法的指数。默认是double</p>
-<h4 id="字符和字符串字面值："><a href="#字符和字符串字面值：" class="headerlink" title="字符和字符串字面值："></a>字符和字符串字面值：</h4><p>字符：‘a’</p>
-<p>字符串：“hello”</p>
-<p>字符串字面值是由常量字符组成的数组，<strong>最后有个‘\0’空字符</strong>。如果两个字符串字面值由空格、缩进、换行符分隔，实际上是一个字符串。</p>
-<h4 id="布尔和指针字面值："><a href="#布尔和指针字面值：" class="headerlink" title="布尔和指针字面值："></a>布尔和指针字面值：</h4><p>布尔：true、false</p>
-<p>指针：nullptr</p>
-<h4 id="转义序列："><a href="#转义序列：" class="headerlink" title="转义序列："></a>转义序列：</h4><p>有两类字符程序员不能直接使用：</p>
-<ol>
-<li>不可打印的字符，如退格或其他控制字符</li>
-<li>在c++语言中含有特殊含义的字符（引号、问号等）</li>
-</ol>
-<p>这时候就需要用到转义序列。</p>
-<table>
-<thead>
-<tr>
-<th>换行符</th>
-<th>\n</th>
-<th>横向制表符</th>
-<th style="text-align:left">\t</th>
-<th>报警符</th>
-<th>\a</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>纵向制表符</strong></td>
-<td><strong>\v</strong></td>
-<td><strong>退格符</strong></td>
-<td style="text-align:left">\b</td>
-<td>双引号</td>
-<td>\“</td>
-</tr>
-<tr>
-<td><strong>反斜线</strong></td>
-<td>\ \</td>
-<td>问号</td>
-<td style="text-align:left">\?</td>
-<td><strong>单引号</strong></td>
-<td>\‘</td>
-</tr>
-<tr>
-<td><strong>回车符</strong></td>
-<td><strong>\r</strong></td>
-<td><strong>进纸符</strong></td>
-<td style="text-align:left">\f</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>也可以用泛化的转义序列，有下两种形式：</p>
-<ol>
-<li>\x 后紧跟1个或多个十六进制数字（一般超过8位的十六进制字符都是与下表中的某个前缀开头的扩展字符集一起使用的）</li>
-<li>\ 后紧跟1~3个八进制数字</li>
-</ol>
-<h4 id="指定字面值的类型："><a href="#指定字面值的类型：" class="headerlink" title="指定字面值的类型："></a>指定字面值的类型：</h4><p><strong>表：字符和字符串字面值：</strong></p>
-<table>
-<thead>
-<tr>
-<th>前缀</th>
-<th>含义</th>
-<th>类型</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>u</td>
-<td>Unicode16字符</td>
-<td>char16_t</td>
-</tr>
-<tr>
-<td>U</td>
-<td>Unicode32字符</td>
-<td>char32_t</td>
-</tr>
-<tr>
-<td>L</td>
-<td>宽字符</td>
-<td>wchar_t</td>
-</tr>
-<tr>
-<td>u8</td>
-<td>UTF-8（仅用于字符串字面常量）</td>
-<td>char</td>
-</tr>
-</tbody>
-</table>
-<p><strong>表：整型字面值</strong>                            </p>
-<table>
-<thead>
-<tr>
-<th>后缀</th>
-<th>最小匹配类型</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>u or U</td>
-<td>unsigned</td>
-</tr>
-<tr>
-<td>l or L</td>
-<td>long</td>
-</tr>
-<tr>
-<td>ll or LL</td>
-<td>long long</td>
-</tr>
-</tbody>
-</table>
-<p><strong>表：浮点型字面值</strong></p>
-<table>
-<thead>
-<tr>
-<th>后缀</th>
-<th>最小匹配类型</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>f or F</td>
-<td>float</td>
-</tr>
-<tr>
-<td>l or L</td>
-<td>long double</td>
-</tr>
-</tbody>
-</table>
-<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>变量提供一个具名的、可供程序操作的存储空间。C++中的每个变量都有其数据类型，数据类型决定着变量所占空间的大小和布局方式、该空间存储值的范围，以及变量能参与的运算。</p>
-<h4 id="变量定义"><a href="#变量定义" class="headerlink" title="变量定义"></a>变量定义</h4><p>变量定义的基本形式：类型说明符 变量名，变量名；</p>
-<p>例：int a=0,b;</p>
-<h4 id="变量初始化"><a href="#变量初始化" class="headerlink" title="变量初始化"></a>变量初始化</h4><p>初始化的含义是创建变量时赋予一个初始值。而赋值这是把对象的当前值擦除，用一个新值代替。</p>
-<ol>
-<li>列表初始化</li>
-<li>默认初始化: 如果定义变量时没有指定初值，则变量被<strong>默认初始化</strong>。内置类型在函数体外定义的话初始化为0， 函数体内则不被初始化. string 在函数内外都是默认为空字符串</li>
-</ol>
-<h4 id="变量的声明与定义（extern关键字）"><a href="#变量的声明与定义（extern关键字）" class="headerlink" title="变量的声明与定义（extern关键字）"></a>变量的声明与定义（extern关键字）</h4><p>C++语言支持分离式编译机制，该机制允许每个文件独立编译。为了支持分离时编译，C++将声明与定义区分开来。<strong>声明</strong>使得名字为程序所知，<strong>定义</strong>创建与名字相关联的实体。</p>
-<p>定义区别于声明是定义除了规定了变量的类型和名字，还会申请存储空间与赋初始值。</p>
-<p>在变量名前加关键字(extern)是声明但不要显示地初始化。例如：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> i; <span class="comment">//声明非定义</span></span><br><span class="line"><span class="keyword">int</span> i ; <span class="comment">//声明且定义</span></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> i = <span class="number">2</span>; <span class="comment">//定义</span></span><br></pre></td></tr></table></figure>
-<p>变量只能被定义一次，但可以被多次声明。在函数内部如果试图初始化一个extern关键字标记的变量会引发错误。</p>
-<h4 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h4><p>标识符由字母数字下划线组成，必须以字母下划线开始，对长度无限制大小写敏感，不得使用c++关键字，不得连续两个下划线或下划线后加大写字母。</p>
-<p><img src="/2018/10/19/variable-type/identifier.png" alt="c++关键字"></p>
-<h4 id="作用域（scope）："><a href="#作用域（scope）：" class="headerlink" title="作用域（scope）："></a><strong>作用域（scope）：</strong></h4><p>作用域是程序的一部分，C++语言中大多数作用域都以花括号分隔。</p>
-<p>同一个名字在不同的作用域中可能指向不同的实体。名字的有效区域始于名字的声明语句，以声明语句所在的作用域末端为结束。</p>
-<p>外层作用域的变量能被能层作用域使用，当内层同样定义了一个相同的变量时会覆盖外层的变量，如需使用则要显示的调用，用<strong>作用域符号</strong>   “<strong>::</strong>“</p>
-<h3 id="复合类型"><a href="#复合类型" class="headerlink" title="复合类型"></a>复合类型</h3><p>复合类型是指基于其他类型定义的类型。最常见的两种是<strong>引用</strong>和<strong>指针</strong>。</p>
-<h4 id="复合类型的声明"><a href="#复合类型的声明" class="headerlink" title="复合类型的声明"></a>复合类型的声明</h4><p>变量的定义包括一个基本数据类型和一组声明符。在一条定义语句中，基本数据类型只有一个但是声明符的不同可以定义出不同类型的变量。</p>
-<p>例：int i = 1024, *p = &amp;i, &amp;r = i;        //i是一个int数， p是int型指针， r是int型引用</p>
-<h4 id="指针和引用的区别："><a href="#指针和引用的区别：" class="headerlink" title="指针和引用的区别："></a><strong>指针和引用的区别：</strong></h4><ol>
-<li>指针指向内存中的某个对象，引用直接绑定对象。</li>
-<li>指针本身是一个对象，允许指针赋值拷贝，在生命周期内可以指向不同的对象；引用不是对象，无法令引用重新绑定到其他对象。</li>
-<li>指针无须在定义时赋初值，和其他内置类型一样，在块作用域内如果没有被初始化则将拥有一个不确定的值；引用则必须在定义时赋初值。</li>
-</ol>
-<h3 id="类型的处理"><a href="#类型的处理" class="headerlink" title="类型的处理"></a>类型的处理</h3><h4 id="类型别名"><a href="#类型别名" class="headerlink" title="类型别名"></a>类型别名</h4><p>类型别名用于简化一些复杂的类型名字。有typedef (类型别名)和 using (别名声明)两种方法。</p>
-<p><strong>typedef：</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">double</span> wages;	<span class="comment">//wages是double的同义词</span></span><br><span class="line"><span class="keyword">typedef</span> wages base, *p;	<span class="comment">//base是double的同义词，p是double*的同义词</span></span><br></pre></td></tr></table></figure>
-<p><strong>using:</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> db = <span class="keyword">double</span>;		<span class="comment">//db是double的同义词</span></span><br></pre></td></tr></table></figure>
-<p><strong><u>注意</u>的是某个类型别名指代的是符合类型或常量，那么用到声明语句就会产生意想不到的后果。</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> *pstring;</span><br><span class="line"><span class="keyword">const</span> pstring cstr = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
-<p>上面定义了pstring为char*类型，而const是对给定类型的修饰。所以const是修饰指针类型，cstr则是指向char的常量指针。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> *cstr = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
-<p>而这处const修饰的是char，则cstr是指向常量char的指针。</p>
-<h4 id="auto类型说明符"><a href="#auto类型说明符" class="headerlink" title="auto类型说明符"></a>auto类型说明符</h4><p>auto 类型说明符可以让编译器通过初始值去推算类型。因此auto定义的变量必须有初始值。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> item = val1 + val2;	<span class="comment">//val1、val2相加的结果推出item的类型</span></span><br></pre></td></tr></table></figure>
-<p>使用auto也能在一条语句中声明多个变量。但是一条声明语句只能有一个基本数据类型，所以语句中变量的初始基本类型都必须一样。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> i = <span class="number">0</span>, *p = &amp;i;	<span class="comment">//正确：i是整数、p是整型指针</span></span><br><span class="line"><span class="keyword">auto</span> sz = <span class="number">0</span>, pi = <span class="number">3.14</span>;	<span class="comment">//错误：sz和pi的类型不一致</span></span><br></pre></td></tr></table></figure>
-<p><strong>编译器推断出来的auto类型有时候和初始值的类型并不完全一样。</strong></p>
-<p>例如<strong>引用</strong>，编译器会以引用对象的类型来作为auto的类型：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>, r = &amp;i;</span><br><span class="line"><span class="keyword">auto</span> a = r;				<span class="comment">//a是一个int类型的整数</span></span><br></pre></td></tr></table></figure>
-<p>其次一般会忽略掉顶层const，而底层const会保留下来:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> ci = i;</span><br><span class="line"><span class="keyword">auto</span> b = ci;			<span class="comment">//b是整数(ci的顶层const被忽略)</span></span><br><span class="line"><span class="keyword">auto</span> c = &amp;i;			<span class="comment">//c是整型指针(整数的地址就是指向整数的指针)</span></span><br><span class="line"><span class="keyword">auto</span> d = &amp;ci; 			<span class="comment">//d是指向整数常量的指针(对常量对象取地址是底层const)</span></span><br></pre></td></tr></table></figure>
-<p>如果希望推出的是顶层const则需要明确定义：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">auto</span> e = ci；</span><br></pre></td></tr></table></figure>
-<h4 id="decltype类型指示符"><a href="#decltype类型指示符" class="headerlink" title="decltype类型指示符:"></a><strong>decltype类型指示符:</strong></h4><p>decltype说明符能从表达式的类型推断出要定义的变量的类型。在此过程中，编译器分析表达式并得到它的类型，却不实际计算表达式的值：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">decltype</span>(f()) sum = x;	<span class="comment">//sum的类型就是函数f的返回类型</span></span><br></pre></td></tr></table></figure>
-<p>decltype处理顶层const与auto有些不同。</p>
-<p>如果decltype使用的表达式是一个变量，则decltype返回的类型包括<strong>顶层const</strong>和<strong>引用</strong>：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> ci = <span class="number">0</span>, &amp;cj = ci;	</span><br><span class="line"><span class="keyword">decltype</span>(ci) x = <span class="number">0</span>;		<span class="comment">//x的类型是const int</span></span><br><span class="line"><span class="keyword">decltype</span>(cj) y = x;		<span class="comment">//y的类型是const int&amp;，y绑定到变量x</span></span><br><span class="line"><span class="keyword">decltype</span>(cj) z;			<span class="comment">//错误，z是引用，必须初始化</span></span><br></pre></td></tr></table></figure>
-<p><strong>需要指出的是，引用从来都是作为所指对象的同义词出现，只有用在decltype处是个例外。</strong></p>
-<p>如果decltype使用的表达式不是一个变量，则decltype返回表达式结果对应的类型：</p>
-<p>如果表达式求值的结果是一个<strong>左值</strong>(参看左值与右值)，那么decltype返回的是一个引用类型。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">42</span>, *p = &amp;i, &amp;r = i;</span><br><span class="line"><span class="keyword">decltype</span>(r + <span class="number">0</span>) b;		<span class="comment">//正确：加法的结果是int，因此b是一个int</span></span><br><span class="line"><span class="keyword">decltype</span>(*p) c;			<span class="comment">//错误：c是int&amp;，必须初始化</span></span><br></pre></td></tr></table></figure>
-<p>解释一下上面代码。因为r是一个引用，因此decltype(r)的结果是引用类型，如果想让结果是r所指的类型，可以把r作为表达式的一部分。显然这个表达式的结果是一个具体值。</p>
-<p>而解引用操作得到的结果是一个左值，因此decltype(*p)是一个引用类型。</p>
-<p>decltype的一个注意的点是：如果decltype所用的表达式是一个变量名加上了一层或多层括号，编译器就会将变量认为是表达式。而变量是一种可以作为赋值语句左值的特殊表达式。所以decltype得到的结果会是引用。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">decltype</span>((i)) d;		<span class="comment">//错误：d是int &amp;,必须初始化</span></span><br></pre></td></tr></table></figure>
-          
+          变量、基本类型和类型别名任何编程语言都具备一组公共语法特征，基本特征包括：
+
+整型、字符型等内置类型
+变量，用来为对象命名
+表达式和语句，用于操纵上述数据类型的具体值
+if或while等控制结构，这些结构允许我们有选择的执行一些语句。
+函数，用于定义可供随时调用的计算单元
+
+大多数变成语言通过两种方
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/10/19/variable-type/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1089,32 +654,19 @@
       
         
           
-            <h2 id="GUN编译器"><a href="#GUN编译器" class="headerlink" title="GUN编译器"></a>GUN编译器</h2><p>编译器的一部分工作是检查文本错误：</p>
-<ol>
-<li>语法错误(syntax)：引号 分号等</li>
-<li>类型错误(type error): 向一个int类型的变量传递了字符串字面值常量</li>
-<li>声明错误(declaration error): c++的每个名字都要先声明才能使用。两种常见的声明错误是:对来自标准库的名字忘记使用std:: 、标识符名字拼写错误。(v1 写成v)</li>
-</ol>
-<h3 id="安装GUN编译器出现的错误："><a href="#安装GUN编译器出现的错误：" class="headerlink" title="安装GUN编译器出现的错误："></a>安装GUN编译器出现的错误：</h3><p><strong>“没有文件扩展‘.js’的脚本引擎。”</strong></p>
-<p><img src="/2018/10/18/gun-compile/no-js.png" alt="no-js"></p>
-<p>该错误是默认js打开方式被修改了。（我是安装了webstorm。-  -）</p>
-<ol>
-<li>打开注册表编辑器中的“HEKY_CLASSES_ROOT.js” </li>
-<li>修改默认的文件为 <strong>JSFile</strong></li>
-</ol>
-<p><img src="/2018/10/18/gun-compile/register.png" alt="注册表编辑器"></p>
-<h3 id="安装完成后的步骤："><a href="#安装完成后的步骤：" class="headerlink" title="安装完成后的步骤："></a>安装完成后的步骤：</h3><ol>
-<li>打开MinGW Installation Manager</li>
-<li>选择MinGW Compiler Suite之后，添加The GUN C++ Compiler的相关项</li>
-<li>然后点击installation -&gt; apply changes 等待完成</li>
-</ol>
-<h3 id="环境变量配置："><a href="#环境变量配置：" class="headerlink" title="环境变量配置："></a>环境变量配置：</h3><ul>
-<li>在PATH里面添加bin目录路径，我的是C:\MinGW\bin</li>
-<li>重启cmd 然后输入g++ -v 如果出现gcc版本就说明配置成功</li>
-</ul>
-<p><img src="/2018/10/18/gun-compile/cmd-gcc.png" alt="cmd-gcc-version"></p>
-<h3 id="GUN编译"><a href="#GUN编译" class="headerlink" title="GUN编译"></a>GUN编译</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -o _test test.cpp</span><br></pre></td></tr></table></figure>
-          
+          GUN编译器编译器的一部分工作是检查文本错误：
+
+语法错误(syntax)：引号 分号等
+类型错误(type error): 向一个int类型的变量传递了字符串字面值常量
+声明错误(declaration error): c++的每个名字都要先声明才能使用。两种常见的声明错误是:对来自标准库的名字忘
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/10/18/gun-compile/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1254,32 +806,22 @@
       
         
           
-            <h1 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h1><p>单例的定义是，单例对象的类必须保证只有一个实例存在。</p>
-<p>通常单例模式被分为饿汉式和懒汉式两大类。</p>
-<ul>
-<li>饿汉式:单例在类加载的时候创建</li>
-<li>懒汉式:单例第一次被使用的时候创建</li>
-</ul>
-<p>下面介绍一下推荐使用的三种实现单例的方式。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 懒汉式，双重校验版</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Singleton instance = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (Singleton.class) &#123;</span><br><span class="line">                <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在这个代码中，主要有三点需要考虑。分别是<code>volatile</code>，<code>synchronized</code>以及<code>两个if判断</code>的作用。</p>
-<p><code>synchronized</code>的作用：</p>
-<p>加了synchronized关键字后，只能有一个线程获取锁进入同步代码块，去执行<code>instance = new Singleton()</code>。</p>
-<p><code>两个if判断</code>的作用：</p>
-<p>第一个if是为了保证效率，只有在instance为null时才进入同步块。</p>
-<p>第二个if是了防止出现多个实例。</p>
-<p><code>volatile</code>的作用：</p>
-<p>首先需要了解到JVM执行<code>instance = new Singleton()</code>,大致经历三个步骤1.给Singleton对象分配地址；2.通过Singleton的构造方法，实例化对象；3.instance引用指向Singleton对象。但是在JVM编译器中存在指令重排序优化，即步骤2，步骤3的执行先后顺序是不确定的。有可能是1-2-3执行，也可能是1-3-2执行。如果在1-3-2的执行顺序情况下，线程A执行完了步骤3，但还没开始执行步骤2，然后cpu被线程B抢占，线程B执行<code>if (instance == null)</code>，由于此时instance已经不是null了(但还没被初始化，比较特殊的中间状态)，所以线程B会直接返回instance，顺理成章地就会报错了。这里的关键是volatile防止出现线程A写操作未完成，线程B就进行读操作了。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 懒汉式，静态内部类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonHolder</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton INSTANCE = <span class="keyword">new</span> Singleton();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> SingletonHolder.INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>《Effective Java》第一版的推荐写法，非常巧妙。</p>
-<ul>
-<li>内部类SingletonHolder，它是一个饿汉式的单例实现，SingletonHolder初始化的时候会由ClassLoader来保证同步，使INSTANCE成一个单例。</li>
-<li>由于SingletonHolder是一个内部类，只在外部类的<code>public final Singleton getInstance()</code>方法中被使用，所以SingletonHolder加载的时机是<code>public final Singleton getInstance()</code>方法第一次被调用的时候</li>
-</ul>
-<p>利用ClassLoader来保证同步，并且还能控制类的加载时机。从内部类SingletonHolder看是一个饿汉式单例的实现，从外部类Singleton看又是一个懒汉式单例的实现。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 枚举实现单例</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Singleton &#123;</span><br><span class="line">    INSTANCE;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">whateverMethod</span><span class="params">()</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>最简洁的方法。由于枚举的特性它保证绝对不被实例化，即使在反射的情况下，并且还提供了序列化。当然，也因为是枚举的特性，它无法被继承。</p>
-          
+          单例模式单例的定义是，单例对象的类必须保证只有一个实例存在。
+通常单例模式被分为饿汉式和懒汉式两大类。
+
+饿汉式:单例在类加载的时候创建
+懒汉式:单例第一次被使用的时候创建
+
+下面介绍一下推荐使用的三种实现单例的方式。
+1234567891011121314151617181920/** * 懒汉式
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/10/03/zhuan-java12/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1419,92 +961,21 @@
       
         
           
-            <h1 id="Java多线程基础"><a href="#Java多线程基础" class="headerlink" title="Java多线程基础"></a>Java多线程基础</h1><h2 id="创建线程的方式"><a href="#创建线程的方式" class="headerlink" title="创建线程的方式"></a>创建线程的方式</h2><ol>
-<li>实现Runnable接口</li>
-<li>实现Callable接口</li>
-<li>继承Thread类</li>
-</ol>
-<p>实现Runnable和Callable接口的类只能当作一个可以在线程中运行的任务，不是真正意义上的线程，因为最后还是需要通过Thread类来调用，可以说任务是通过线程驱动而执行的。</p>
-<p>实现Runnable接口</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyRunnable</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"运行中！"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        MyRunnable myRunnable = <span class="keyword">new</span> MyRunnable();</span><br><span class="line">        Thread thread = <span class="keyword">new</span> Thread(myRunnable);</span><br><span class="line">        thread.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>实现Callable接口</p>
-<p>与Runnable相比，Callable可以有返回值，返回值通过FutureTasK封装。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyCallable</span> <span class="keyword">implements</span> <span class="title">Callable</span>&lt;<span class="title">Integer</span>&gt; </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1024</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        MyCallable myCallable = <span class="keyword">new</span> MyCallable();</span><br><span class="line">        FutureTask&lt;Integer&gt; futureTask = <span class="keyword">new</span> FutureTask&lt;&gt;(myCallable);</span><br><span class="line">        Thread thread = <span class="keyword">new</span> Thread(futureTask);</span><br><span class="line">        thread.start();</span><br><span class="line">        System.out.println(futureTask.get());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>继承Thread类</p>
-<p>因为Thread类也实现了Runnable接口，因此同样需要实现run()方法。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">     System.out.println(<span class="string">"Hello world!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        MyThread myThread = <span class="keyword">new</span> MyThread();</span><br><span class="line">        myThread.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>实现接口的方式与继承Thread比较</p>
-<p>实现接口可能更好一些：1.Java不支持多继承2.类可能只要求可以执行就好了，继承整个类开销过大。</p>
-<h2 id="sleep-、join-、yield-的区别"><a href="#sleep-、join-、yield-的区别" class="headerlink" title="sleep()、join()、yield()的区别"></a>sleep()、join()、yield()的区别</h2><p><strong>Thread.sleep()</strong>方法会休眠当前正在执行的线程，休眠时间单位为毫秒。sleep()可能抛出InterruptedException异常，因为异常不能跨线程传播，因此须在本地处理。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MySleep</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            System.out.println(System.currentTimeMillis());</span><br><span class="line">            Thread.sleep(<span class="number">10000</span>);</span><br><span class="line">            System.out.println(System.currentTimeMillis());</span><br><span class="line">        &#125;<span class="keyword">catch</span> (InterruptedException e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        MySleep mySleep = <span class="keyword">new</span> MySleep();</span><br><span class="line">        Thread thread = <span class="keyword">new</span> Thread(mySleep);</span><br><span class="line">        thread.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>yield方法</strong></p>
-<p>调用静态方法yield()说明当前线程已经完成了生命周期中最重要的部分，可以切换给其他线程来执行。该方法只是对线程调度器的一个建议，而且也只是建议具有相同优先级的其他线程可以运行。</p>
-<h2 id="CountDownLatch与CyclicBarrier"><a href="#CountDownLatch与CyclicBarrier" class="headerlink" title="CountDownLatch与CyclicBarrier"></a>CountDownLatch与CyclicBarrier</h2><p><strong>CountDownLatch</strong></p>
-<p>用来控制一个线程等待多个线程。</p>
-<p>原理:维护一个计数器，每次调用countDown()方法会让计数器的值减1，减到0的时候，那些因为调用await()方法而等待的线程会被唤醒。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyCountDownLatch</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> totalThread = <span class="number">10</span>;</span><br><span class="line">        CountDownLatch countDownLatch = <span class="keyword">new</span> CountDownLatch(totalThread);</span><br><span class="line">        ExecutorService executorService = Executors.newCachedThreadPool();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;totalThread;i++)&#123;</span><br><span class="line">            executorService.execute(()-&gt;&#123;</span><br><span class="line">                System.out.println(<span class="string">"Hello "</span>);</span><br><span class="line">                countDownLatch.countDown();</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        countDownLatch.await();</span><br><span class="line">        System.out.println(<span class="string">"World"</span>);</span><br><span class="line">        executorService.shutdown();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>CyclicBarrier</strong></p>
-<p>用来控制多线程互相等待，只有这些线程都等待时，这些线程才会继续执行。</p>
-<p>原理:维护一个计数器，线程执行await()方法之后，计数器减1并等待，直到计数器为0，所有调用await()方法的线程才能继续执行。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyCyclicBarrier</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> totalThread = <span class="number">10</span>;</span><br><span class="line">        CyclicBarrier cyclicBarrier = <span class="keyword">new</span> CyclicBarrier(totalThread);</span><br><span class="line">        ExecutorService executorService = Executors.newCachedThreadPool();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;totalThread;i++)&#123;</span><br><span class="line">            executorService.execute(()-&gt;&#123;</span><br><span class="line">                System.out.println(<span class="string">"Hello"</span>);</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    cyclicBarrier.await();</span><br><span class="line">                &#125;<span class="keyword">catch</span> (InterruptedException e)&#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (BrokenBarrierException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                System.out.println(<span class="string">"World"</span>);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        executorService.shutdown();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>CyclicBarrier与CountDownLatch的一个区别是，CyclicBarrier的计数器可以通过调用<code>cyclicBarrier.reset()</code>方法循环使用，所以又被称为循环屏障。</p>
-<h2 id="Semaphore"><a href="#Semaphore" class="headerlink" title="Semaphore"></a>Semaphore</h2><p>类似于操作系统中的信号量，可以控制对互斥资源的访问线程数。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MySemaphore</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> clientCount = <span class="number">3</span>;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> totalRequstCount = <span class="number">10</span>;</span><br><span class="line">        Semaphore semaphore = <span class="keyword">new</span> Semaphore(clientCount);</span><br><span class="line">        ExecutorService executorService = Executors.newCachedThreadPool();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;totalRequstCount;i++)&#123;</span><br><span class="line">            executorService.execute(()-&gt;&#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    semaphore.acquire();</span><br><span class="line">                    System.out.println(semaphore.availablePermits());</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">                    semaphore.release();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        executorService.shutdown();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="线程池的实现原理"><a href="#线程池的实现原理" class="headerlink" title="线程池的实现原理"></a>线程池的实现原理</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ThreadPoolExecutor</span><span class="params">(<span class="keyword">int</span> corePoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="keyword">int</span> maximumPoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="keyword">long</span> keepAliveTime,</span></span></span><br><span class="line"><span class="function"><span class="params">                          TimeUnit unit,</span></span></span><br><span class="line"><span class="function"><span class="params">                          BlockingQueue&lt;Runnable&gt; workQueue,</span></span></span><br><span class="line"><span class="function"><span class="params">                          ThreadFactory threadFactory,</span></span></span><br><span class="line"><span class="function"><span class="params">                          RejectedExecutionHandler handler)</span></span></span><br></pre></td></tr></table></figure>
-<p>ThreadPoolExecutor的7个核心参数:</p>
-<ol>
-<li>corePoolSize:核心线程池大小。在创建线程之后，默认情况下，线程池没有任何线程，而是等待任务到来才创建线程区执行任务。</li>
-<li>maximumPoolSize:线程池允许的最大线程数。当任务数比corePoolSize大时，任务添加到workQueue中，当workQueue满了，将继续创建线程以处理任务。</li>
-<li>keepAliveTime:只有当线程池中的线程数量大于核心线程数时，这个参数才会起作用，多余的空闲线程等待任务的最长时间。</li>
-<li>unit: keepAliveTime的时间单位</li>
-<li>workQueue:存储没来得及执行的任务</li>
-<li>threadFactory:执行程序创建线程时使用的工厂</li>
-<li>handler:因为超出线程池容量范围和队列容量而执行的处理程序</li>
-</ol>
-<h2 id="Exector"><a href="#Exector" class="headerlink" title="Exector"></a>Exector</h2><p>Exector管理多个异步任务的执行，而无需开发人员显式地管理线程的生命周期。这里的异步指多个任务执行互不干扰，不需要同步操作。</p>
-<ol>
-<li>CachedThreadPool:一个任务创建一个线程</li>
-<li>FixedThreadPool:所有任务只能使用固定大小的线程</li>
-<li>SingleThreadExecutor:相当于大小为1的FixedThreadPool</li>
-</ol>
-<p><em>拓展</em></p>
-<p><strong>阿里编码规范插件给出的建议</strong>:线程池不允许使用Exectors去创建，而是通过ThreadPoolExecutor的方式，这样的处理方式让写的同学更加明确线程池的运行规则，规避资源耗尽的风险。</p>
-<p>说明:Exectors各个方法的弊端:</p>
-<ul>
-<li><p>newFixedThreadPool和newSingleThreadExecutor:主要问题是堆积的请求处理队列可能会耗费非常大的内存，甚至OOM。</p>
-</li>
-<li><p>newCachedThreadPool和newScheduledThreadPool:主要问题是最大线程数是Integer.MAX_VALUE，可能会创建数量非常多的线程，甚至OOM。</p>
-<h2 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h2></li>
-</ul>
-<p>通俗来讲，线程对于一个volatile变量的修改，对于其他线程是可见的。即线程每次获取的volatile变量的值都是最新的。</p>
-<p>汇编代码层面用Lock前缀指令</p>
-<ol>
-<li>将当前cpu缓存行的数据写回主内存中。</li>
-<li>这个写回主内存的操作会导致其他CPU缓存里该内存地址的数据失效。</li>
-</ol>
-<p>volatile的可见性与禁止重排序是基于内存屏障(Memory Barrier)实现的。内存屏障又称为内存栅栏，是一个CPU指令。在程序运行时，为了提高执行性能，编译器和处理器会对指令进行，插入一条内存屏障会告诉编译器和CPU，不管什么指令都不能和这条内存屏障重排序。</p>
-<h2 id="synchronized与lock"><a href="#synchronized与lock" class="headerlink" title="synchronized与lock"></a>synchronized与lock</h2><p>用法比较:</p>
-<ol>
-<li>lock使用比较灵活，但必须手动获取和释放锁。</li>
-<li>lock只适用于代码块，synchronized可用于方法和代码块。</li>
-<li>lock可以控制公平性。</li>
-<li>lock可以中断地获取锁，中断异常将被抛出，锁会被释放。</li>
-</ol>
-<p><strong>ReetrantLock</strong>是Lock的实现类，是一个互斥的同步器，在多线程高竞争的条件下，ReetrantLock比synchronized有更加优异的性能表现。</p>
-<p>ReetrantLock主要利用CAS+CLH队列(带头节点的双向非循环队列)实现，它支持公平锁和非公平锁。</p>
-<p>基本实现:先通过CAS获取锁，如果此时已经有线程占据了锁，那就加入CLH队列并挂起。当锁被释放后，排在CLH队首的线程会被唤醒，然后通过CAS再次获取锁。</p>
-<p>如果此时是公平锁:并且同时还有另一线程进来尝试获取锁，当它发现自己不是队首时，会排到队尾，由队首线程获取到锁。</p>
-<p>如果此时是非公平锁:并且同时还有另一线程进来获取锁，那么有可能让这个线程先获取。</p>
-<p><strong>synchronized</strong></p>
-<p>synchronized代码块是由一对monitorenter/monitorexit指令实现的。</p>
-<p>类型上可以分为偏斜锁、轻量级锁、重量级锁</p>
-<p>当没有竞争，默认使用偏斜锁，JVM利用CAS操作在对象头上的Mark Word部分设置线程Id，如果有另外的线程试图锁定某个被偏斜过的对象，则升级成轻量级锁，轻量级锁依赖CAS操作Mark Word来获取锁，如果成功，就使用轻量级锁，否则，进一步升级成为重量级锁。</p>
-<p><em>拓展</em><br><strong>自旋锁</strong>:竞争锁失败的线程，并不会真实的在操作系统层面挂起等待，而是让JVM做几个空循环，在经过若干循环之后，如果可以获取锁，那么进入临界区，如果还不能获取锁，才会将线程挂起。<br><strong>重入</strong>:由于内置锁是可重入的，因此如果某个线程试图获得一个已经由他自己持有的锁，那么这个请求就会成功。”重入”意味着获取锁的操作的粒度是”线程”，而不是调用。重入的实现方式是，为每个锁关联一个获取计数值和一个所有者线程。当计数值为0时，这个锁就被认为是没有被任何线程持有。当线程请求一个未被持有的锁时，JVM将记下锁的持有者，并且将获取计数值置为1。如果同一个线程再次获取这个锁，计数值将递增，而当线程退出同步代码块时，计数值会相应递减。当计数值为0时，这个锁将被释放。(内置锁:每个Java对象都可以用做一个实现同部的锁，这些锁被称为内置锁(Intrinsic Lock)或者监视器(Monitor Lock)–《Java并发编程实战》)</p>
-<h2 id="CAS"><a href="#CAS" class="headerlink" title="CAS"></a>CAS</h2><p>CAS是非阻塞同步的。</p>
-<p>CAS指令需要三个操作数，分别是内存地址V，旧的预期值A和新值B。当执行操作时，只有当V的值等于A,才将V的值更新为B。</p>
-<p><strong>ABA问题</strong></p>
-<p>如果一个变量初次读取的时候是A值，它的值被改成了B，后来又被改回A,那CAS操作会误认为它从来没有被改变过。通过原子引用类AtomicStampedReference来控制变量值的版本来解决这个问题。</p>
-          
+          Java多线程基础创建线程的方式
+实现Runnable接口
+实现Callable接口
+继承Thread类
+
+实现Runnable和Callable接口的类只能当作一个可以在线程中运行的任务，不是真正意义上的线程，因为最后还是需要通过Thread类来调用，可以说任务是通过线程驱动而执行的。
+实现Run
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/09/21/zhuan-java7/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1644,53 +1115,15 @@
       
         
           
-            <h1 id="Java方法参数按值传递"><a href="#Java方法参数按值传递" class="headerlink" title="Java方法参数按值传递"></a>Java方法参数按值传递</h1><p>程序设计语言中往往分成按值调用和按引用调用。按值调用(call by value)表示方法接收的是调用者提供的值。而按引用调用(call by reference)表示方法接收的是调用者提供的变量地址。一个方法可以修改传递引用所对应的变量值，而不能修改传递值调用所对应的变量值。</p>
-<p>在Java程序设计语言中，方法参数总是按值调用。方法得到的是参数值的一个拷贝。特别需要注意的是，方法不能修改传递给它的任何参数变量的内容(这句话下文会通过三个例子来进行分析)</p>
-<p>首先需要知道的是，Java的方法参数共有两种类型:</p>
-<ol>
-<li>基本数据类型</li>
-<li>对象引用</li>
-</ol>
-<p>例子代码1:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassA</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">void</span> <span class="title">testCallByValue</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">        x++;</span><br><span class="line">        System.out.println(<span class="string">"testCallByValue: "</span>+x);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] arg)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> y=<span class="number">1</span>;</span><br><span class="line">        testCallByValue(y);</span><br><span class="line">        System.out.println(<span class="string">"main: "</span>+y);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">testCallByValue: <span class="number">2</span></span><br><span class="line">main: <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p>可以看到，y被传入<code>testCallByValue(int x)</code>方法，参数x的值变为2，y本身的值依然为1，没有变化。</p>
-<p>执行的具体过程如下:</p>
-<ol>
-<li>x被初始化为y值的拷贝(也就是1)</li>
-<li>x++,x的值变为2，y依然为1</li>
-<li>方法结束，参数x不再使用</li>
-</ol>
-<p>例子代码2：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassA</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">void</span> <span class="title">testCallByReference</span><span class="params">(List arrayListX)</span></span>&#123;</span><br><span class="line">        arrayListX.add(<span class="number">10000</span>);</span><br><span class="line">        arrayListX.add(<span class="number">10010</span>);</span><br><span class="line">        arrayListX.forEach(array-&gt;System.out.println(<span class="string">"testCallByReference: "</span>+array));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] arg)</span></span>&#123;</span><br><span class="line">        List&lt;Integer&gt; arrayListY = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        arrayListY.add(<span class="number">10086</span>);</span><br><span class="line">        testCallByReference(arrayListY);</span><br><span class="line">        arrayListY.forEach(array-&gt;System.out.println(<span class="string">"main: "</span>+array));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">testCallByReference: <span class="number">10086</span></span><br><span class="line">testCallByReference: <span class="number">10000</span></span><br><span class="line">testCallByReference: <span class="number">10010</span></span><br><span class="line">main: <span class="number">10086</span></span><br><span class="line">main: <span class="number">10000</span></span><br><span class="line">main: <span class="number">10010</span></span><br></pre></td></tr></table></figure>
-<p>可以看到arrayListY被传入<code>testCallByReference(List arrayListX)</code>方法后，自身的值也发生了改变。</p>
-<p>执行的具体过程如下:</p>
-<ol>
-<li>arrayListX被初始化为arrayListY值的拷贝,这里是一个对象的引用(即arrayListX和arrayListY引用的同一个对象)</li>
-<li><code>testCallByReference(List arrayListX)</code>方法应用于这个对象的引用，add成功</li>
-<li>方法结束，参数arrayListX不再使用，arrayListY仍然引用着这个对象</li>
-</ol>
-<p>例子代码3：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassA</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">void</span> <span class="title">testCallByReference</span><span class="params">(String strX)</span></span>&#123;</span><br><span class="line">        strX = <span class="string">"strX"</span>;</span><br><span class="line">        System.out.println(<span class="string">"testCallByReference: "</span>+strX);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] arg)</span></span>&#123;</span><br><span class="line">        String strY = <span class="string">"strY"</span>;</span><br><span class="line">        testCallByReference(strY);</span><br><span class="line">        System.out.println(<span class="string">"main: "</span>+strY);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">testCallByReference: strX</span><br><span class="line">main: strY</span><br></pre></td></tr></table></figure>
-<p>可以看到strY被传入<code>testCallByReference(String strX)</code>方法后，自身的值没有改变。</p>
-<p>执行的具体过程如下:</p>
-<ol>
-<li>strX被初始化为strY值的拷贝,这里是一个对象的引用(即strX和strY引用的同一个对象)</li>
-<li><code>testCallByReference(String strX)</code>方法使strX引用了一个新的字符串对象，strY不会改变自身的引用</li>
-<li>方法结束，参数strX不再使用，strY依然引用着<code>&quot;strY&quot;</code>这个对象</li>
-</ol>
-<p>上面三个例子各做一个结论说明，分别是:</p>
-<ol>
-<li>一个方法不能修改一个基本数据类型参数的值</li>
-<li>一个方法可以改变一个对象参数的状态</li>
-<li>一个方法不能让对象参数引用一个新的对象</li>
-</ol>
-          
+          Java方法参数按值传递程序设计语言中往往分成按值调用和按引用调用。按值调用(call by value)表示方法接收的是调用者提供的值。而按引用调用(call by reference)表示方法接收的是调用者提供的变量地址。一个方法可以修改传递引用所对应的变量值，而不能修改传递值调用所对应的变量值
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/08/26/zhuan-java5/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1830,48 +1263,19 @@
       
         
           
-            <h1 id="计算机网络基础"><a href="#计算机网络基础" class="headerlink" title="计算机网络基础"></a>计算机网络基础</h1><h3 id="TCP三次握手"><a href="#TCP三次握手" class="headerlink" title="TCP三次握手"></a>TCP三次握手</h3><ol>
-<li>首先服务器处于监听状态，等待连接请求。</li>
-<li>客户端向服务器发送请求报文，SYN=1,seq=x。</li>
-<li>服务器收到连接请求报文，如果同意连接，会向客户端发送确认报文SYN=1,ACK=1,ack=x+1,seq=y。</li>
-<li>客户端收到服务器的确认报文之后，还要发送确认报文ACK=1，ack=y+1,seq=x+1。</li>
-<li>服务器收到确认报文，连接建立。</li>
-</ol>
-<h5 id="为什么需要三次握手"><a href="#为什么需要三次握手" class="headerlink" title="为什么需要三次握手?"></a>为什么需要三次握手?</h5><p>如果网络阻塞，客户端发送的连接请求会需要很长时间才能到达服务器。客户端等待一个超时重传时间后，就会重新发起连接请求。但是迟到的连接请求最后还是会到达服务器，如果不进行三次握手，服务器会打开两个连接。如果有三次握手，客户端则会忽略服务器对于迟到连接请求的确认。</p>
-<h3 id="TCP四次挥手"><a href="#TCP四次挥手" class="headerlink" title="TCP四次挥手"></a>TCP四次挥手</h3><ol>
-<li>客户端发送连接释放报文，FIN=1,seq=u。</li>
-<li>服务器收到之后发送确认ACK=1,seq=v,ack=u+1，此时服务器进入CLOSE-WAIT状态，服务器可以向客户端发送数据但是客户端不能向服务器发送数据。</li>
-<li>当服务器发送完传送的数据之后，服务器会发送连接释放报文FIN=1,ACK=1,seq=w,ack=u+1。</li>
-<li>客户端收到后发送确认ACK=1,seq=u+1,ack=w+1，客户端进入TIME-WAIT状态，等待2MSL(最大报文存活时间)后释放连接。</li>
-<li>服务器收到客户端的确认后释放连接。</li>
-</ol>
-<h5 id="为什么需要四次挥手"><a href="#为什么需要四次挥手" class="headerlink" title="为什么需要四次挥手?"></a>为什么需要四次挥手?</h5><p>CLOSE-WAIT:为了让服务器发送完还未传送完毕的数据。</p>
-<p>TIME-WAIT:</p>
-<p>a.确保最后一个确认报文能够达到。如果服务器没收到客户端发送来的确认报文，就会重新发送连接释放请求报文，客户端等待一段时间就是为了处理这种情况的发生。</p>
-<p>b.等待一段时间是为了让本次连接内产生的所有报文在网络中消失，使得下一个新的连接不会出现旧的连接请求报文。</p>
-<h3 id="Cookie与Session"><a href="#Cookie与Session" class="headerlink" title="Cookie与Session"></a>Cookie与Session</h3><p>HTTP是超文本传输协议，无状态。</p>
-<p><strong>Cookie</strong></p>
-<p>Cookie是客户端保持状态的解决方案。从定义上来讲，Cookie就是服务器发送给客户端的特殊信息，而这些信息以文本的形式存放在客户端，然后客户端每次请求的时候都会带上这些特殊信息。</p>
-<p><strong>Session</strong></p>
-<p>Session是通过服务器来保持状态，在创建Session的同时，服务器会为该Session生成唯一的SessionId，SessionId创建之后，就可以调用Session相关的方法往Session增加内容了。并且这些内容只会存放在服务器中，发送到客户端的只有SessionId。当客户端再次发送请求的时候会将SessionId带上，服务器收到请求之后，根据SessionId找到对应的Session，从而再次使用。如果请求中没有SessionId，服务器会生成一个新的SessionId。</p>
-<p>在Java Web项目中，这里的session特指HttpSession，查看tomcat源码可知，HttpSession提供了一些方法，来控制session或者获取session的状态，如获取session的id，获取session的创建时间，使session失效等。</p>
-<p>Session的存放方式有两种:</p>
-<p>a.通过URL存取，URL会带上一个jSessionId=XXXX。</p>
-<p>b.通过Cookie存取(tomcat默认如此)。</p>
-<p>在大型互联网系统中，单独使用Cookie或者Session都是不可行的(通过分布式Session可解决)。</p>
-<p>Cookie的不足:</p>
-<p>a.随着访问量和Cookie的增多，它占用的带宽会很大。</p>
-<p>b.Cookie因为存放在客户端中，可以被修改，不安全。</p>
-<p>Session的不足:</p>
-<p>a.不容易在多台服务器中共享。</p>
-<p>b.Session太多非常消耗服务器性能。</p>
-<h3 id="HTTP中GET与POST的比较"><a href="#HTTP中GET与POST的比较" class="headerlink" title="HTTP中GET与POST的比较"></a>HTTP中GET与POST的比较</h3><p><strong>作用</strong>:GET主要用于获取资源;POST主要用于传输实体主体。</p>
-<p><strong>参数</strong>:GET是出现在URL中，POST存储在实体主体中。</p>
-<p><strong>安全</strong>:安全的HTTP方法是不会改变服务器状态的，也就是只可读。GET方法是安全的，而POST不是，因为POST的目的是传输实体主体，这其中的数据通常会改变服务器中的数据。</p>
-<p><strong>XMLHttpRequest</strong>:是一个API,它为客户端提供与服务器之间传输数据的功能，在Ajax应用程序中，XMLHttpRequest对象负责将用户信息以异步通信的方式发送到服务器，并接收到服务器返回的响应信息和数据。</p>
-<p>a.在使用XMLHttpRequest的POST的方法时，浏览器会先发送Header在发送Data。但并不是所有浏览器都这么做，火狐浏览器就是一个例外。</p>
-<p>b.XMLHttpRequest的GET方法是Header和Data一起发送。</p>
-          
+          计算机网络基础TCP三次握手
+首先服务器处于监听状态，等待连接请求。
+客户端向服务器发送请求报文，SYN=1,seq=x。
+服务器收到连接请求报文，如果同意连接，会向客户端发送确认报文SYN=1,ACK=1,ack=x+1,seq=y。
+客户端收到服务器的确认报文之后，还要发送确认报文ACK=1，a
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/08/20/zhuan-java10/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2011,18 +1415,16 @@
       
         
           
-            <h1 id="面试常见的String问题"><a href="#面试常见的String问题" class="headerlink" title="面试常见的String问题"></a>面试常见的String问题</h1><p>String的intern方法以及new String(“Hello”)创建几个对象是经常出现的问题。</p>
-<h3 id="String-s-new-String-“Hello”-创建了几个对象"><a href="#String-s-new-String-“Hello”-创建了几个对象" class="headerlink" title="String s = new String(“Hello”)创建了几个对象"></a>String s = new String(“Hello”)创建了几个对象</h3><p>符号引用s,字面量”Hello”在编译期间会加载到Class文件的常量池中,然后类加载阶段进入方法区的运行时常量池中(<a href="https://www.zhihu.com/question/55994121" target="_blank" rel="noopener">Java 中new String(“字面量”) 中 “字面量” 是何时进入字符串常量池的?</a>)</p>
-<p>常量池中的“对象”是在编译期就确定了的，在类被加载的时候创建，如果类加载时，该字符串常量在常量池中已经有了，那这一步就省略了。堆中的对象是在运行期才确定的，在代码执行到new的时候创建的。对象的符号引用s是保存在Java虚拟机栈上的，他保存的是堆中刚刚创建出来的的字符串对象的引用。 所以，若常量池中已经存在”Hello”，则直接引用，也就是此时只会创建一个对象，如果常量池中不存在”Hello”，则先创建后引用，也就是有两个。</p>
-<h3 id="String的intern-方法"><a href="#String的intern-方法" class="headerlink" title="String的intern()方法"></a>String的intern()方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    String s1 = <span class="string">"Hollis"</span>;</span><br><span class="line">    String s2 = <span class="keyword">new</span> String(<span class="string">"Hollis"</span>);</span><br><span class="line">    String s3 = <span class="keyword">new</span> String(<span class="string">"Hollis"</span>).intern();</span><br><span class="line">    System.out.println(s1==s2);</span><br><span class="line">    System.out.println(s1==s3);</span><br><span class="line">    System.out.println(s2==s3);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">false</span></span><br><span class="line"><span class="keyword">true</span></span><br><span class="line"><span class="keyword">false</span></span><br></pre></td></tr></table></figure>
-<p>intern()有两个作用，第一个是将字符串字面量放入常量池（如果池没有的话），第二个是返回这个常量的引用。</p>
-<p>intern中说的“如果常量池中有该字面量的话就直接返回其引用”，指的是会直接返回字面量对象的引用。这个过程是不会在Java堆中再创建一个String对象的。</p>
-<h3 id="String-StringBuffer-StringBuilder的区别"><a href="#String-StringBuffer-StringBuilder的区别" class="headerlink" title="String,StringBuffer,StringBuilder的区别"></a>String,StringBuffer,StringBuilder的区别</h3><p>String具有不可变性。对String对象的任何改变都不影响到原对象，相关的任何change操作都会生成新的对象。不可变可提高多线程情况下的性能。针对常量池的优化。当两个String对象拥有相同的值，他们都只是引用常量池中的同一个拷贝。当一个字符串反复出现，可大幅度节省内存空间。</p>
-<p>而StringBuffer和StringBuilder的对象是变量，对变量进行操作就是直接对该对象进行更改(其值改变后，对象的引用不会改变)，而不进行创建和回收的操作，所以速度要比String快很多。只不过StringBuffer线程安全，StringBuilder线程不安全。所以性能上，StringBuilder最好。</p>
-<p>应用场景:在字符串不经常改变的场景下，优先使用String。在频繁改变字符串，并且在多线程环境下，优先使用StringBuffer。在频繁改变字符串，并且在单线程环境下，优先使用StringBuilder.</p>
-          
+          面试常见的String问题String的intern方法以及new String(“Hello”)创建几个对象是经常出现的问题。
+String s = new String(“Hello”)创建了几个对象符号引用s,字面量”Hello”在编译期间会加载到Class文件的常量池中,然后类加载阶段进入方
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/08/13/zhuan-java4/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2162,31 +1564,16 @@
       
         
           
-            <h1 id="HTTPS的简单认识"><a href="#HTTPS的简单认识" class="headerlink" title="HTTPS的简单认识"></a>HTTPS的简单认识</h1><p>由于HTTP有使用明文通信，内容可能会被窃听；不验证通信方身份，通信方可能会遭遇伪装；无法证明报文完整性，报文有可能被篡改等问题。于是通过HTTPS来解决避免这些问题。</p>
-<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>HTTPS不是一个全新的协议。而是HTTP先和SSL(Secure Socket Layer)通信，再由SSL和TCP通信，也就是说HTTPS使用了隧道通信。也因为使用了SSL，HTTPS具备加密(放窃听)、认证(放伪装)和完整性保护(放篡改)的特性。</p>
-<h3 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h3><h4 id="加密的分类"><a href="#加密的分类" class="headerlink" title="加密的分类"></a><strong>加密的分类</strong></h4><ol>
-<li>对称密钥加密(Symmetric-Key Encryption)，加密和解密使用同一密钥。</li>
-</ol>
-<ul>
-<li>优点:运算速度快。</li>
-<li>缺点:无法安全的将密钥传输给通信方</li>
-</ul>
-<ol>
-<li>非对称密钥加密，有称为公开密钥加密(Public-Key Encryption)，加密和解密使用不同的密钥。公开密钥所有人都可以获取，通信发送方获得接收方的公开密钥之后，就使用公开密钥进行加密，接收方收到通信内容之后使用私有密钥进行解密。非对称密钥出了用来加密，还可以用来进行签名。因为私有密钥无法被其他人获取，因此通信发送方使用其私有密钥进行签名，通信接收方使用发送方的公开密钥对签名进行解密，来判断这个签名是否正确</li>
-</ol>
-<ul>
-<li>优点:更加安全地将公开密钥传输给通信的发送方</li>
-<li>缺点:运行速度慢。</li>
-</ul>
-<h4 id="HTTPS-采用的加密方式"><a href="#HTTPS-采用的加密方式" class="headerlink" title="HTTPS 采用的加密方式"></a>HTTPS 采用的加密方式</h4><p>HTTPS 采用混合的加密机制，使用非对称密钥加密用于传输对称密钥来保证传输过程的安全性，之后使用对称密钥加密进行通信来保证通信过程的效率。</p>
-<h3 id="认证"><a href="#认证" class="headerlink" title="认证"></a>认证</h3><p>通过使用 <strong>证书</strong> 来对通信方进行认证。数字证书认证机构（CA，Certificate Authority）是客户端与服务器双方都可信赖的第三方机构。服务器的运营人员向 CA 提出公开密钥的申请，CA 在判明提出申请者的身份之后，会对已申请的公开密钥做数字签名，然后分配这个已签名的公开密钥，并将该公开密钥放入公开密钥证书后绑定在一起。进行 HTTPS 通信时，服务器会把证书发送给客户端。客户端取得其中的公开密钥之后，先使用数字签名进行验证，如果验证通过，就可以开始通信了。通信开始时，客户端需要使用服务器的公开密钥将自己的私有密钥传输给服务器，之后再进行对称密钥加密。</p>
-<h3 id="完整性保护"><a href="#完整性保护" class="headerlink" title="完整性保护"></a>完整性保护</h3><p>SSL 提供报文摘要功能来进行完整性保护。HTTP 也提供了 MD5 报文摘要功能，但不是安全的。例如报文内容被篡改之后，同时重新计算 MD5 的值，通信接收方是无法意识到发生了篡改。</p>
-<p>HTTPS 的报文摘要功能之所以安全，是因为它结合了加密和认证这两个操作。试想一下，如果加密之后的报文，遭到篡改之后，也很难重新计算报文摘要，因为无法轻易获取明文。</p>
-<h3 id="HTTPS的缺点"><a href="#HTTPS的缺点" class="headerlink" title="HTTPS的缺点"></a>HTTPS的缺点</h3><ul>
-<li>因为需要进行加密解密等过程，因此速度会更慢。</li>
-<li>需要支付证书授权的额外费用。</li>
-</ul>
-          
+          HTTPS的简单认识由于HTTP有使用明文通信，内容可能会被窃听；不验证通信方身份，通信方可能会遭遇伪装；无法证明报文完整性，报文有可能被篡改等问题。于是通过HTTPS来解决避免这些问题。
+简介HTTPS不是一个全新的协议。而是HTTP先和SSL(Secure Socket Layer)通信，再由S
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/08/03/zhuan-java11/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2326,173 +1713,21 @@
       
         
           
-            <h2 id="final、finally、finalize的区别"><a href="#final、finally、finalize的区别" class="headerlink" title="final、finally、finalize的区别"></a>final、finally、finalize的区别</h2><p><strong>final</strong>:</p>
-<ol>
-<li>final修饰的类不可以被继承。</li>
-<li>final修饰的方法不可以被重写。</li>
-<li>final修饰的变量引用不可以改变。</li>
-</ol>
-<p><strong>finally</strong>:finally是Java保证重点代码一定要被执行的一种机制。我们可以使用try-finally或者try-catch-finally来进行类似关闭JDBC连接、保证unlock锁等动作。</p>
-<p><strong>finalize</strong>:finalize是基础类java.lang.Oject的一个方法。当一个对象可以被回收的时候，如果需要执行该对象的finalize()方法，那么就有可能在该方法中让对象重新被引用，从而实现自救。finalize()方法只能执行一次，如果回收的对象在之前调用了finalize()方法，后面回收时不会调用finalize()方法。finalize机制已经不推荐使用了，并且在JDK9开始被标记为deprecated。</p>
-<h2 id="int与Integer"><a href="#int与Integer" class="headerlink" title="int与Integer"></a>int与Integer</h2><p>Integer的默认值为null,int默认值为0；</p>
-<p>Integer是int的包装类,int是Java中的基本数据类型。Java中一共有8种基本数据类型。其中4种为整型，2种浮点类型，1种用于表示Unicode编码字符单元的字符类型char,1种用于表示真值的boolean。</p>
-<p><strong>整型</strong></p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>存储大小</th>
-<th>取值范围</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>byte</td>
-<td>1字节</td>
-<td>-128~127</td>
-</tr>
-<tr>
-<td>short</td>
-<td>2字节</td>
-<td>-32768~32767</td>
-</tr>
-<tr>
-<td>int</td>
-<td>4字节</td>
-<td>-2147483648~2147483647(正好超过20亿)</td>
-</tr>
-<tr>
-<td>long</td>
-<td>8字节</td>
-<td>-9223372036854775808~9223372036854775807</td>
-</tr>
-</tbody>
-</table>
-<p><strong>浮点类型</strong></p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>存储大小</th>
-<th>取值范围</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>float</td>
-<td>4字节</td>
-<td>约±3.40282347E+38F(有效位数6~7位)</td>
-</tr>
-<tr>
-<td>double</td>
-<td>8字节</td>
-<td>约±1.79769313486231570E+308(有效位数15位)</td>
-</tr>
-</tbody>
-</table>
-<p>double的数值精度是float类型的两倍，所以double又称为双精度数值。float类型的数值需要有后缀F(例如，3.14F)。若没有后缀，默认为double类型，也可以加后缀D(例如，3.14D)</p>
-<p><strong>字符类型</strong></p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>存储大小</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>char</td>
-<td>2字节</td>
-</tr>
-</tbody>
-</table>
-<p>char通常表示字符常量。例如‘A’是编码65所对应的字符常量。</p>
-<p><strong>boolean类型</strong></p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>存储大小</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>boolean</td>
-<td>1bit</td>
-</tr>
-</tbody>
-</table>
-<p>boolean类型有两个值:false和true。原来判断逻辑条件。</p>
-<h2 id="重载与重写"><a href="#重载与重写" class="headerlink" title="重载与重写"></a>重载与重写</h2><h4 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h4><p>重载存在于同一个类中，指的是一个方法与已经存在的方法名称上相同，但是参数列表(参数类型、个数、顺序至少一个)不同。需要注意的是，返回值类型不同，其他都相同不算重载。</p>
-<h4 id="重写"><a href="#重写" class="headerlink" title="重写"></a>重写</h4><p>重写存在于继承中，指的是子类实现了一个与父类在方法声明上完全相同的一个方法。</p>
-<p>为了满足里式替换原则，重写有两个限制:</p>
-<ol>
-<li>子类方法的访问权限必须大于等于父类方法。</li>
-<li>子类方法的返回类型必须是父类方法返回类型或者是其子类。</li>
-</ol>
-<p>使用@Override注解，可以让编译器帮忙检查是否满足以上两个条件。</p>
-<h2 id="抽象类与接口"><a href="#抽象类与接口" class="headerlink" title="抽象类与接口"></a>抽象类与接口</h2><h4 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h4><p>接口是抽象方法的一个集合，通过接口达到了API定义与实现分离的目的。接口无法被实例化，接口中的变量都隐含着public static final的意义。在Java 8之前，接口中的方法必须是抽象方法。Java 8开始，接口可以有default方法和static方法。常用的一些接口如Callable、Runnable、Comparator等在Java 8中添加了@FunctionalInterface注解，简单来说就是只有一个抽象方法的接口，通常建议使用@FunctionalInterface注解来标记。Lambda本身也可以看作是一类Function Inerface。</p>
-<h4 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h4><p>抽象类是无法被实例化的类，用abstract关键字修饰class，它的主要作用是代码重用。抽象类可以有0个或者多个抽象方法。抽象类大多抽取相关类的共用方法实现或者共同成员变量。然后通过继承的方式达到代码复用的目的。除了无法被实例化，形式上和普通类没有什么太多区别。</p>
-<h2 id="反射的用途与实现"><a href="#反射的用途与实现" class="headerlink" title="反射的用途与实现"></a>反射的用途与实现</h2><h4 id="反射的作用"><a href="#反射的作用" class="headerlink" title="反射的作用"></a>反射的作用</h4><ol>
-<li>在运行时判断任意一个对象所属的类。</li>
-<li>在运行时构造任意一个类的对象。</li>
-<li>在运行时判断一个类所具有的成员变量和方法。</li>
-<li>在运行时调用任何一个对象的方法。</li>
-</ol>
-<h4 id="反射的用途"><a href="#反射的用途" class="headerlink" title="反射的用途"></a>反射的用途</h4><ol>
-<li>使用IDE时，在一个类或者对象后输入”.”符号，编译器会自动列出属性和方法。</li>
-<li>很多框架都是配置化的(例如Spring通过XML文件配置Java Bean)为了保证框架的通用性，他们会根据配置文件加载不同的对象或者类，调用不同的方法，这个时候必须用到反射—运行时动态加载所需对象。</li>
-</ol>
-<h4 id="反射的基本运用"><a href="#反射的基本运用" class="headerlink" title="反射的基本运用"></a>反射的基本运用</h4><ol>
-<li><p>获取class对象(三种方式)</p>
-<p>a.class.forName();</p>
-<p>b.对象.class；</p>
-<p>c.对象.getClass()；</p>
-</li>
-<li><p>获取类的实例</p>
-<p>a.对于有空构造方法的类</p>
-<p>Object o = class对象.newInstance();//会调用空构造器，如果没有会报错</p>
-<p>b.对于没有空构造方法的，先获取他的构造对象。</p>
-<p>Constroctor constroctor = class对象.getConstroctor(String class,Integer class);</p>
-<p>Object obj = constroctor.newInstance(“yuanzhi”,1);//通过构造器对象的newInstance()方法进行对象的初始化。</p>
-</li>
-</ol>
-<h2 id="equals与”-”"><a href="#equals与”-”" class="headerlink" title="equals与”==”"></a>equals与”==”</h2><p>由于所有类继承自Object类，如果没有重写equals方法的话，调用的仍是Object类的方法，而Object类的equals方法返回的是==的判断。==比较引用，equals通常比较内容。</p>
-<h2 id="Exception-和Error，运行时异常与一般异常，检查异常-checked-与非检查异常-unchecked-的区别关系"><a href="#Exception-和Error，运行时异常与一般异常，检查异常-checked-与非检查异常-unchecked-的区别关系" class="headerlink" title="Exception 和Error，运行时异常与一般异常，检查异常(checked)与非检查异常(unchecked)的区别关系?"></a>Exception 和Error，运行时异常与一般异常，检查异常(checked)与非检查异常(unchecked)的区别关系?</h2><p>Java中只有<strong>Throwable</strong>类的实例才可以被抛出(throw)或者捕获(catch)，它是异常处理机制的基本组成类型。Exception和Error都是继承了Throwable类。</p>
-<p><strong>Exception</strong>是程序在正常运行中，可以预料的意外情况，并且应该被捕获，进行相应的处理。</p>
-<p><strong>Error</strong>是指正常情况下，不大可能出现的情况，绝大部分的Error都会导致程序(比如JVM)自身处于非正常、不可恢复的状态，所以也不需要去捕获。比如常见的OutOfMemoryError。</p>
-<p>Exception有可分为可检查异常与非检查异常，<strong>检查异常</strong>必须在代码中进行异常捕获处理，这是编译期处理的一部分。<strong>非检查异常</strong>就是运行时异常，可以通过编码避免的逻辑错误，具体根据需要是否捕获，并不会在编译期强制要求，比如常见的NullPointerException，ArrayIndexOutOfBoundsException。</p>
-<h4 id="try-catch-finally代码段"><a href="#try-catch-finally代码段" class="headerlink" title="try-catch-finally代码段"></a>try-catch-finally代码段</h4><ol>
-<li>当一个try后面跟了多个catch的时候，必须要先捕获小的异常再捕获大的异常。</li>
-<li>在finally中尽量不要使用return。</li>
-<li>尽量只捕获有必要的代码段。</li>
-<li>尽量不要捕获类似Exception这样的通用异常，而是应该捕获特定异常。</li>
-</ol>
-<h4 id="自定义异常"><a href="#自定义异常" class="headerlink" title="自定义异常"></a>自定义异常</h4><p>示例：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InvalidParamException</span> <span class="keyword">extends</span> <span class="title">Throwable</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">InvalidParamException</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在方法中可使用<code>throw new InvalidParamException(&quot;这是一个自定义异常&quot;);</code>来进行自定义异常的抛出。</p>
-<h4 id="throws与throw"><a href="#throws与throw" class="headerlink" title="throws与throw"></a>throws与throw</h4><p>throws用在声明方法时，表示该方法可能要抛出异常 。throw一般是在代码块的内部，当程序出现某种逻辑错误时由开发人员主动抛出某种特定类型的异常 。</p>
-<h4 id="从性能角度考虑，java异常处理"><a href="#从性能角度考虑，java异常处理" class="headerlink" title="从性能角度考虑，java异常处理"></a>从性能角度考虑，java异常处理</h4><ol>
-<li>try-catch代码段会产生额外的开销，它会影响JVM对代码的优化，所以尽量只捕获有必要的代码段，不要一个try包住整段的代码。</li>
-<li>Java每实例化一个Exception，都会对当时的栈进行快照，这是一个相对比较重的操作。如果异常发生的比较频繁，这个开销不能被忽略。</li>
-</ol>
-<h2 id="ArrayList与LinkedList"><a href="#ArrayList与LinkedList" class="headerlink" title="ArrayList与LinkedList"></a>ArrayList与LinkedList</h2><p>ArrayList:1.允许插入NULL值</p>
-<p> 2.允许重复</p>
-<p> 3.有序</p>
-<p> 4.不是线程安全的</p>
-<p>ArrayList底层是数组，所以需要连续的内存空间，在非末尾插入和删除，为了保证内存连续，需要使用System.arraycopy()进行数组数据的移动，每次扩容为原来的1.5倍，依然是使用System.arraycopy()方法进行扩容。</p>
-<p>LinkedList:1.允许插入NULL值</p>
-<p> 2.允许重复</p>
-<p> 3.有序</p>
-<p> 4.不是线程安全的</p>
-<p>LinkedList是基于双向链表实现的，Node作为存储单元，next和prev分别保存着后一个以及前一个的存储单元的引用。</p>
-<p>两者比较:</p>
-<ol>
-<li>ArrayList基于动态数组实现，LinkedList基于双向链表实现。</li>
-<li>ArrayList支持随机访问，LinkedList不支持。</li>
-<li>Linked在任意位置添加/删除元素更快。</li>
-</ol>
-          
+          final、finally、finalize的区别final:
+
+final修饰的类不可以被继承。
+final修饰的方法不可以被重写。
+final修饰的变量引用不可以改变。
+
+finally:finally是Java保证重点代码一定要被执行的一种机制。我们可以使用try-finally或者try-c
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/07/03/zhuan-java3/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2635,7 +1870,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
